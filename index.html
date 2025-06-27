@@ -33,24 +33,27 @@
 
     .discord-zone {
       position: absolute;
-      top: 15px;
-      right: 30px;
+      top: 10px;
+      right: 20px;
       text-align: center;
     }
 
     .discord-zone img {
-      width: 90px;
-      height: 90px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       border: none;
       box-shadow: none;
+      display: block;
+      margin: 0 auto;
     }
 
     .discord-zone span {
       display: block;
-      margin-top: 8px;
-      font-size: 18px;
+      margin-top: 10px;
+      font-size: 22px;
       color: white;
+      text-align: center;
     }
 
     .button-container {
@@ -78,9 +81,8 @@
   <div class="footer">
     CookZen
 
-    <!-- Zone Discord (logo ou profil) -->
     <div id="discord-zone" class="discord-zone">
-      <!-- Logo Discord visible au départ -->
+      <!-- Logo Discord par défaut -->
       <a id="login-btn" href="#">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Logo Discord">
       </a>
@@ -91,7 +93,6 @@
 
   <div class="contenu">
     <p>Contenu de la page</p>
-
     <div class="button-container">
       <button onclick="window.location.href='pain.html'">🍞 Pain sans gluten</button>
       <button onclick="window.location.href='pizza.html'">🍕 Pâte à pizza sans gluten</button>
@@ -119,7 +120,7 @@
     const token = getToken();
 
     if (token) {
-      loginBtn.style.display = 'none'; // cacher logo Discord
+      loginBtn.style.display = 'none';
 
       fetch('https://discord.com/api/users/@me', {
         headers: { Authorization: `Bearer ${token}` }
@@ -129,9 +130,9 @@
         const username = user.username;
         const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
-        // Afficher avatar + pseudo (sans #0000)
+        // Affiche avatar + pseudo (centré et en gros)
         discordZone.innerHTML = `
-          <img src="${avatarURL}" alt="Avatar">
+          <img src="${avatarURL}" alt="Avatar Discord">
           <span>${username}</span>
         `;
       });
