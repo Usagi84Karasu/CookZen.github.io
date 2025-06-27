@@ -3,10 +3,8 @@
 <head>
   <title>CookZen</title>
   <style>
-
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
     }
 
     .footer {
@@ -17,18 +15,16 @@
       background: #db3131;
       color: white;
       display: flex;
-      justify-content: center; /* CookZen centré */
+      justify-content: center;
       align-items: center;
       padding: 75px;
       box-sizing: border-box;
       font-size: 60px;
-      /* relative pour positionnement absolu enfant */
-      position: fixed;
     }
 
     .barre {
       position: fixed;
-      top: 215px; /* hauteur du footer */
+      top: 215px;
       left: 0;
       width: 100%;
       height: 10px;
@@ -36,63 +32,51 @@
     }
 
     .contenu {
-      margin-top: 230px; /* pour éviter que le texte soit caché */
+      margin-top: 230px;
       padding: 20px;
       font-size: 40px;
     }
 
-    /* Conteneur Discord en haut à droite dans footer */
     .discord-login {
       position: absolute;
-      top: 20px;
-      right: 30px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      font-size: 18px;
-      text-decoration: none;
+      top: 15px;
+      right: 20px;
     }
 
-    /* Avatar Discord sans ombre ni bordure */
     .discord-login img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      box-shadow: none !important;
-      border: none !important;
-      vertical-align: middle;
-    }
-
-    /* Texte nom utilisateur */
-    #user-info h2 {
-      margin: 0;
-      font-weight: normal;
-      font-size: 18px;
-      line-height: 1;
-      color: white;
-    }
-
-    /* Cacher le bouton connexion classique */
-    #login-btn {
-      display: none;
-    }
-
-    /* Style bouton déconnexion simple */
-    #logout-btn {
-      position: absolute;
-      top: 80px;
-      right: 30px;
-      padding: 5px 12px;
-      font-size: 14px;
-      border-radius: 6px;
+      box-shadow: none;
       border: none;
       cursor: pointer;
-      background-color: white;
+    }
+
+    #logout-btn {
+      position: absolute;
+      top: 75px;
+      right: 20px;
+      background: white;
       color: #db3131;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
       display: none;
     }
 
+    #user-info {
+      display: none;
+    }
+
+    #user-info img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      box-shadow: none;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -100,16 +84,12 @@
   <div class="footer">
     CookZen
 
-    <!-- Discord connexion / utilisateur -->
-    <a id="login-btn" href="#" class="discord-login" target="_self" style="display:flex;align-items:center;">
-      <img src="https://cdn.discordapp.com/icons/discord/discord-logo.png" alt="Discord" />
-      <span>Se connecter avec Discord</span>
+    <!-- Icône Discord (connexion ou avatar) -->
+    <a id="login-btn" class="discord-login" href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
     </a>
 
-    <div id="user-info" style="display:none; flex-direction: column; align-items: flex-end;">
-      <!-- Avatar + nom affichés via JS -->
-    </div>
-
+    <div id="user-info" class="discord-login"></div>
     <button id="logout-btn">Déconnexion</button>
   </div>
 
@@ -125,8 +105,8 @@
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
     const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
     const userInfo = document.getElementById('user-info');
+    const logoutBtn = document.getElementById('logout-btn');
 
     loginBtn.href = AUTH_URL;
 
@@ -149,7 +129,7 @@
     if (token) {
       loginBtn.style.display = 'none';
       logoutBtn.style.display = 'block';
-      userInfo.style.display = 'flex';
+      userInfo.style.display = 'block';
 
       fetch('https://discord.com/api/users/@me', {
         headers: {
@@ -159,8 +139,9 @@
       .then(resp => resp.json())
       .then(user => {
         userInfo.innerHTML = `
-          <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar Discord" />
-          <h2>${user.username}#${user.discriminator}</h2>
+          <a href="#" title="${user.username}#${user.discriminator}">
+            <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar">
+          </a>
         `;
       });
 
