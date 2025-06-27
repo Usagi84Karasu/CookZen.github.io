@@ -1,154 +1,172 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <title>CookZen</title>
-    <style>
+<head>
+  <title>CookZen</title>
+  <style>
 
-      .footer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: #db3131;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 75px;
-        box-sizing: border-box;
-        font-size: 60px;
-      }
-
-      .barre {
-        position: fixed;
-        top: 215px; /* hauteur du footer */
-        left: 0;
-        width: 100%;
-        height: 10px;
-        background: black;
-      }
-
-      .contenu {
-        margin-top: 230px; /* pour éviter que le texte soit caché */
-        padding: 20px;
-        font-size: 40px;
-      }
-
-    .button {
-      background-color: white;
-      color: #5865F2;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-size: 18px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      text-decoration: none;
-      transition: 0.3s;
-      display: inline-block;
-      margin-top: 20px;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
 
-    .button:hover {
-      background-color: #f0f0f0;
+    .footer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #db3131;
+      color: white;
+      display: flex;
+      justify-content: center; /* CookZen centré */
+      align-items: center;
+      padding: 75px;
+      box-sizing: border-box;
+      font-size: 60px;
+      /* relative pour positionnement absolu enfant */
+      position: fixed;
     }
 
-    #user-info {
-      background-color: rgba(0,0,0,0.2);
+    .barre {
+      position: fixed;
+      top: 215px; /* hauteur du footer */
+      left: 0;
+      width: 100%;
+      height: 10px;
+      background: black;
+    }
+
+    .contenu {
+      margin-top: 230px; /* pour éviter que le texte soit caché */
       padding: 20px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      font-size: 40px;
     }
 
-    img {
+    /* Conteneur Discord en haut à droite dans footer */
+    .discord-login {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    /* Avatar Discord sans ombre ni bordure */
+    .discord-login img {
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      box-shadow: none !important;
+      border: none !important;
+      vertical-align: middle;
     }
 
-    h2 {
-      margin-top: 10px;
+    /* Texte nom utilisateur */
+    #user-info h2 {
+      margin: 0;
       font-weight: normal;
+      font-size: 18px;
+      line-height: 1;
+      color: white;
+    }
+
+    /* Cacher le bouton connexion classique */
+    #login-btn {
+      display: none;
+    }
+
+    /* Style bouton déconnexion simple */
+    #logout-btn {
+      position: absolute;
+      top: 80px;
+      right: 30px;
+      padding: 5px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: white;
+      color: #db3131;
+      display: none;
     }
 
   </style>
 </head>
-  <body>
+<body>
 
-    <div class="footer">CookZen</div>
-    <div class="barre"></div>
+  <div class="footer">
+    CookZen
 
-    <div class="contenu">
-      <p>Contenu de la page</p>
+    <!-- Discord connexion / utilisateur -->
+    <a id="login-btn" href="#" class="discord-login" target="_self" style="display:flex;align-items:center;">
+      <img src="https://cdn.discordapp.com/icons/discord/discord-logo.png" alt="Discord" />
+      <span>Se connecter avec Discord</span>
+    </a>
+
+    <div id="user-info" style="display:none; flex-direction: column; align-items: flex-end;">
+      <!-- Avatar + nom affichés via JS -->
     </div>
 
-<!-- 🔘 Bouton Connexion -->
-<a id="login-btn" class="button" href="#">Se connecter avec Discord</a>
+    <button id="logout-btn">Déconnexion</button>
+  </div>
 
-<!-- 🔥 Infos utilisateur -->
-<div id="user-info" style="display: none;"></div>
+  <div class="barre"></div>
 
-<!-- 🚪 Bouton Déconnexion -->
-<button id="logout-btn" class="button" style="display: none;">Déconnexion</button>
-
-    <div class="button">
-<button onclick="window.location.href='pain.html'">🍞 Pain sans gluten</button>
-<button onclick="window.location.href='pizza.html'">🍕 Pate à pizza sans gluten</button>
-<button onclick="window.location.href='cookie.html'">🍪 Cookies sans gluten</button>
-<button onclick="window.location.href='pain.html'"></button>
-<button onclick="window.location.href='pain.html'"></button>
-<button onclick="window.location.href='pain.html'"></button>
-    </div>
+  <div class="contenu">
+    <p>Contenu de la page</p>
+  </div>
 
   <script>
-  const CLIENT_ID = '1387928652041162892';
-  const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
+    const CLIENT_ID = '1387928652041162892';
+    const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
+    const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
-  const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const userInfo = document.getElementById('user-info');
 
-  document.getElementById('login-btn').href = AUTH_URL;
+    loginBtn.href = AUTH_URL;
 
-  function getToken() {
-    const hash = window.location.hash;
-    if (hash.includes("access_token")) {
-      const params = new URLSearchParams(hash.substring(1));
-      return params.get("access_token");
-    }
-    return null;
-  }
-
-  function logout() {
-    window.location.hash = '';
-    window.location.reload();
-  }
-
-  const token = getToken();
-  const loginBtn = document.getElementById('login-btn');
-  const logoutBtn = document.getElementById('logout-btn');
-  const userInfo = document.getElementById('user-info');
-
-  if (token) {
-    loginBtn.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
-
-    fetch('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${token}`
+    function getToken() {
+      const hash = window.location.hash;
+      if (hash.includes("access_token")) {
+        const params = new URLSearchParams(hash.substring(1));
+        return params.get("access_token");
       }
-    })
-    .then(resp => resp.json())
-    .then(user => {
-      userInfo.innerHTML = `
-        <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" 
-             alt="Avatar" width="100">
-        <h2>${user.username}#${user.discriminator}</h2>
-      `;
-      userInfo.style.display = 'block';
-    });
+      return null;
+    }
 
-    logoutBtn.addEventListener('click', logout);
-  }
-</script>
+    function logout() {
+      window.location.hash = '';
+      window.location.reload();
+    }
+
+    const token = getToken();
+
+    if (token) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'block';
+      userInfo.style.display = 'flex';
+
+      fetch('https://discord.com/api/users/@me', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(resp => resp.json())
+      .then(user => {
+        userInfo.innerHTML = `
+          <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar Discord" />
+          <h2>${user.username}#${user.discriminator}</h2>
+        `;
+      });
+
+      logoutBtn.addEventListener('click', logout);
+    }
+  </script>
+
 </body>
 </html>
