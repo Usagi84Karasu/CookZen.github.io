@@ -20,6 +20,7 @@
       padding: 75px;
       box-sizing: border-box;
       font-size: 60px;
+      position: fixed;
     }
 
     .barre {
@@ -37,45 +38,45 @@
       font-size: 40px;
     }
 
+    /* Discord logo / avatar */
     .discord-login {
       position: absolute;
       top: 15px;
-      right: 20px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
     }
 
     .discord-login img {
-      width: 50px;
-      height: 50px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
       box-shadow: none;
       border: none;
+    }
+
+    /* Boutons sans gluten */
+    .button-container {
+      margin-top: 40px;
+    }
+
+    .button-container button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #db3131;
+      color: white;
       cursor: pointer;
     }
 
-    #logout-btn {
-      position: absolute;
-      top: 75px;
-      right: 20px;
-      background: white;
-      color: #db3131;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      display: none;
-    }
-
-    #user-info {
-      display: none;
-    }
-
-    #user-info img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      box-shadow: none;
-      border: none;
+    .button-container button:hover {
+      background-color: #b42828;
     }
   </style>
 </head>
@@ -84,19 +85,24 @@
   <div class="footer">
     CookZen
 
-    <!-- Icône Discord (connexion ou avatar) -->
+    <!-- Logo ou avatar Discord en haut à droite -->
     <a id="login-btn" class="discord-login" href="#">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord Logo">
     </a>
 
-    <div id="user-info" class="discord-login"></div>
-    <button id="logout-btn">Déconnexion</button>
+    <div id="user-info" class="discord-login" style="display: none;"></div>
   </div>
 
   <div class="barre"></div>
 
   <div class="contenu">
     <p>Contenu de la page</p>
+
+    <div class="button-container">
+      <button onclick="window.location.href='pain.html'">🍞 Pain sans gluten</button>
+      <button onclick="window.location.href='pizza.html'">🍕 Pâte à pizza sans gluten</button>
+      <button onclick="window.location.href='cookie.html'">🍪 Cookies sans gluten</button>
+    </div>
   </div>
 
   <script>
@@ -106,7 +112,6 @@
 
     const loginBtn = document.getElementById('login-btn');
     const userInfo = document.getElementById('user-info');
-    const logoutBtn = document.getElementById('logout-btn');
 
     loginBtn.href = AUTH_URL;
 
@@ -119,17 +124,11 @@
       return null;
     }
 
-    function logout() {
-      window.location.hash = '';
-      window.location.reload();
-    }
-
     const token = getToken();
 
     if (token) {
       loginBtn.style.display = 'none';
-      logoutBtn.style.display = 'block';
-      userInfo.style.display = 'block';
+      userInfo.style.display = 'flex';
 
       fetch('https://discord.com/api/users/@me', {
         headers: {
@@ -139,13 +138,10 @@
       .then(resp => resp.json())
       .then(user => {
         userInfo.innerHTML = `
-          <a href="#" title="${user.username}#${user.discriminator}">
-            <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar">
-          </a>
+          <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar">
+          <span>${user.username}#${user.discriminator}</span>
         `;
       });
-
-      logoutBtn.addEventListener('click', logout);
     }
   </script>
 
