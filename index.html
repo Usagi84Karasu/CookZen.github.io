@@ -1,95 +1,110 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CookZen</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CookZen (mobile)</title>
   <style>
     body { margin: 0; font-family: sans-serif; }
 
-    /* FOOTER */
+    /* ======= HEADER FIXÉ ======= */
     .footer {
       position: fixed;
-      top: 0; left: 0; width: 100%;
+      top: 0; left: 0;
+      width: 100%;
+      height: 130px;
       background: #db3131;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 60px 0;
-      box-sizing: border-box;
       font-size: 36px;
+      box-sizing: border-box;
+      z-index: 10;
     }
-    .barre { position: fixed; top: 140px; left: 0; width: 100%; height: 8px; background:black; }
+
+    .discord-zone {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      text-align: center;
+    }
+
+    .discord-zone img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .discord-zone span {
+      display: block;
+      font-size: 16px;
+      margin-top: 4px;
+      color: white;
+    }
+
+    .barre {
+      position: fixed;
+      top: 130px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
+    }
+
     .contenu {
-      margin-top: 160px;
+      margin-top: 150px;
       padding: 10px;
       font-size: 18px;
     }
 
-    /* Discord logo/avatar */
-    .discord-zone {
-      position: absolute;
-      top: 10px; right: 10px;
-      text-align: center;
-    }
-    .discord-zone img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      border: none;
-      box-shadow: none;
-      display: block;
-      margin: 0 auto;
-    }
-    .discord-zone span {
-      display: block;
-      margin-top: 6px;
-      font-size: 24px;
-      color: white;
-      text-align: center;
+    /* ======= RECETTES ======= */
+    .recette-item {
+      margin: 20px 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
     }
 
-    /* Boutons recettes */
-    .button-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 10px 0;
-    }
-    .button-container button {
+    .recette-title {
       font-size: 20px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
+      font-weight: bold;
+      display: inline;
+    }
+
+    .voir-btn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
       background: #db3131;
       color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
-    .button-container button:hover {
-      background: #b42828;
+
+    .recette-content {
+      display: none;
+      margin-top: 10px;
+      font-size: 16px;
     }
 
-    /* Recette sections */
-    .recette {
-      display: none;
-    }
-    .recette.active {
+    .recette-content.active {
       display: block;
     }
 
-    /* Mobile optimisations */
     @media (max-width: 480px) {
-      .footer { font-size: 28px; padding: 50px 0; }
-      .discord-zone img { width: 120px; height: 120px; }
-      .discord-zone span { font-size: 20px; }
-      .button-container button { font-size: 18px; padding: 10px; }
-      .contenu { font-size: 16px; }
+      .footer { font-size: 26px; height: 120px; }
+      .discord-zone img { width: 65px; height: 65px; }
+      .discord-zone span { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ======= HEADER ======= -->
   <div class="footer">
     CookZen
     <div id="discord-zone" class="discord-zone">
@@ -101,59 +116,66 @@
 
   <div class="barre"></div>
 
+  <!-- ======= CONTENU ======= -->
   <div class="contenu">
-    <div class="button-container">
-      <button data-rec="pain">🍞 Pain sans gluten</button>
-      <button data-rec="pizza">🍕 Pâte à pizza sans gluten</button>
-      <button data-rec="cookies">🍪 Cookies sans gluten</button>
+
+    <div class="recette-item">
+      <span class="recette-title">🍞 Pain sans gluten</span>
+      <button class="voir-btn" onclick="toggleRecette('pain')">Voir la recette</button>
+      <div id="pain" class="recette-content">
+        <ul>
+          <li>250 g farine de riz</li>
+          <li>100 g fécule de maïs</li>
+          <li>1 sachet levure</li>
+          <li>300 ml eau tiède</li>
+          <li>1 c. à s. huile d'olive</li>
+          <li>1 c. à c. sel</li>
+        </ul>
+        <p>Mélange, laisse reposer 1h, puis cuire 45 min à 200 °C.</p>
+      </div>
     </div>
 
-    <div id="pain" class="recette">
-      <h2>🍞 Pain sans gluten</h2>
-      <ul>
-        <li>250 g farine de riz</li>
-        <li>100 g fécule de maïs</li>
-        <li>1 sachet levure</li>
-        <li>300 ml eau tiède</li>
-        <li>1 c. à s. huile d'olive</li>
-        <li>1 c. à c. sel</li>
-      </ul>
-      <p>Mélange, laisse reposer 1h, puis cuire 45 min à 200 °C.</p>
+    <div class="recette-item">
+      <span class="recette-title">🍕 Pâte à pizza sans gluten</span>
+      <button class="voir-btn" onclick="toggleRecette('pizza')">Voir la recette</button>
+      <div id="pizza" class="recette-content">
+        <ul>
+          <li>200 g farine sans gluten</li>
+          <li>1/2 sachet levure</li>
+          <li>120 ml eau tiède</li>
+          <li>1 c. à s. huile d'olive</li>
+          <li>1 pincée de sel</li>
+        </ul>
+        <p>Mélange, repose 1h, étale, ajoute ta garniture, cuis 15 min à 220 °C.</p>
+      </div>
     </div>
 
-    <div id="pizza" class="recette">
-      <h2>🍕 Pâte à pizza sans gluten</h2>
-      <ul>
-        <li>200 g farine sans gluten</li>
-        <li>1/2 sachet levure</li>
-        <li>120 ml eau tiède</li>
-        <li>1 c. à s. huile d'olive</li>
-        <li>1 pincée de sel</li>
-      </ul>
-      <p>Mélange, repose 1h, étale, ajoute ta garniture, cuis 15 min à 220 °C.</p>
+    <div class="recette-item">
+      <span class="recette-title">🍪 Cookies sans gluten</span>
+      <button class="voir-btn" onclick="toggleRecette('cookie')">Voir la recette</button>
+      <div id="cookie" class="recette-content">
+        <ul>
+          <li>100 g beurre mou</li>
+          <li>100 g sucre</li>
+          <li>1 œuf</li>
+          <li>150 g poudre d’amande</li>
+          <li>Pépites de chocolat</li>
+        </ul>
+        <p>Mélange, forme boules, cuis 10‑12 min à 180 °C.</p>
+      </div>
     </div>
 
-    <div id="cookies" class="recette">
-      <h2>🍪 Cookies sans gluten</h2>
-      <ul>
-        <li>100 g beurre mou</li>
-        <li>100 g sucre</li>
-        <li>1 œuf</li>
-        <li>150 g poudre d’amande</li>
-        <li>Pépites de chocolat</li>
-      </ul>
-      <p>Mélange, forme boules, cuis 10‑12 min à 180 °C.</p>
-    </div>
   </div>
 
+  <!-- ======= SCRIPT ======= -->
   <script>
-    // Discord OAuth
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+
     const loginBtn = document.getElementById('login-btn');
-    loginBtn.href = AUTH_URL;
     const discordZone = document.getElementById('discord-zone');
+    loginBtn.href = AUTH_URL;
 
     function getToken() {
       const hash = window.location.hash;
@@ -171,15 +193,11 @@
         });
     }
 
-    // Recette interactive mobile
-    const buttons = document.querySelectorAll('.button-container button');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.recette').forEach(r => r.classList.remove('active'));
-        document.getElementById(btn.dataset.rec).classList.add('active');
-        window.scrollTo({ top: 160, behavior: 'smooth' });
-      });
-    });
+    // Afficher / cacher une recette
+    function toggleRecette(id) {
+      const content = document.getElementById(id);
+      content.classList.toggle('active');
+    }
   </script>
 
 </body>
