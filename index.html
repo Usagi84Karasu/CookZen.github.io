@@ -12,13 +12,13 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%;
-      height: 130px;
+      height: 120px;
       background: #db3131;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 36px;
+      font-size: 32px;
       box-sizing: border-box;
       z-index: 10;
     }
@@ -31,8 +31,8 @@
     }
 
     .discord-zone img {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       display: block;
       margin: 0 auto;
@@ -40,14 +40,14 @@
 
     .discord-zone span {
       display: block;
-      font-size: 16px;
+      font-size: 14px;
       margin-top: 4px;
       color: white;
     }
 
     .barre {
       position: fixed;
-      top: 130px;
+      top: 120px;
       left: 0;
       width: 100%;
       height: 8px;
@@ -56,7 +56,7 @@
     }
 
     .contenu {
-      margin-top: 150px;
+      margin-top: 135px;
       padding: 10px;
       font-size: 18px;
     }
@@ -71,11 +71,10 @@
     .recette-title {
       font-size: 20px;
       font-weight: bold;
-      display: inline;
     }
 
-    .voir-btn {
-      margin-left: 10px;
+    .voir-btn, .etape-btn {
+      margin-top: 6px;
       padding: 6px 12px;
       font-size: 14px;
       background: #db3131;
@@ -83,6 +82,7 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      display: inline-block;
     }
 
     .recette-content {
@@ -96,9 +96,11 @@
     }
 
     @media (max-width: 480px) {
-      .footer { font-size: 26px; height: 120px; }
-      .discord-zone img { width: 65px; height: 65px; }
-      .discord-zone span { font-size: 14px; }
+      .footer { font-size: 24px; height: 110px; }
+      .barre { top: 110px; }
+      .discord-zone img { width: 60px; height: 60px; }
+      .discord-zone span { font-size: 12px; }
+      .recette-title { font-size: 18px; }
     }
   </style>
 </head>
@@ -120,8 +122,9 @@
   <div class="contenu">
 
     <div class="recette-item">
-      <span class="recette-title">🍞 Pain sans gluten</span>
-      <button class="voir-btn" onclick="toggleRecette('pain')">Voir la recette</button>
+      <div class="recette-title">🍞 Pain sans gluten ; 
+        <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
+      </div>
       <div id="pain" class="recette-content">
         <ul>
           <li>250 g farine de riz</li>
@@ -131,13 +134,14 @@
           <li>1 c. à s. huile d'olive</li>
           <li>1 c. à c. sel</li>
         </ul>
-        <p>Mélange, laisse reposer 1h, puis cuire 45 min à 200 °C.</p>
+        <a class="etape-btn" href="pain.html">Voir les étapes</a>
       </div>
     </div>
 
     <div class="recette-item">
-      <span class="recette-title">🍕 Pâte à pizza sans gluten</span>
-      <button class="voir-btn" onclick="toggleRecette('pizza')">Voir la recette</button>
+      <div class="recette-title">🍕 Pâte à pizza sans gluten ; 
+        <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
+      </div>
       <div id="pizza" class="recette-content">
         <ul>
           <li>200 g farine sans gluten</li>
@@ -146,13 +150,14 @@
           <li>1 c. à s. huile d'olive</li>
           <li>1 pincée de sel</li>
         </ul>
-        <p>Mélange, repose 1h, étale, ajoute ta garniture, cuis 15 min à 220 °C.</p>
+        <a class="etape-btn" href="pizza.html">Voir les étapes</a>
       </div>
     </div>
 
     <div class="recette-item">
-      <span class="recette-title">🍪 Cookies sans gluten</span>
-      <button class="voir-btn" onclick="toggleRecette('cookie')">Voir la recette</button>
+      <div class="recette-title">🍪 Cookies sans gluten ; 
+        <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
+      </div>
       <div id="cookie" class="recette-content">
         <ul>
           <li>100 g beurre mou</li>
@@ -161,7 +166,7 @@
           <li>150 g poudre d’amande</li>
           <li>Pépites de chocolat</li>
         </ul>
-        <p>Mélange, forme boules, cuis 10‑12 min à 180 °C.</p>
+        <a class="etape-btn" href="cookie.html">Voir les étapes</a>
       </div>
     </div>
 
@@ -185,18 +190,25 @@
     const token = getToken();
     if (token) {
       loginBtn.style.display = 'none';
-      fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
-        .then(r => r.json())
-        .then(user => {
-          const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-          discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
-        });
+      fetch('https://discord.com/api/users/@me', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(r => r.json())
+      .then(user => {
+        const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+        discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
+      });
     }
 
-    // Afficher / cacher une recette
-    function toggleRecette(id) {
-      const content = document.getElementById(id);
-      content.classList.toggle('active');
+    // Afficher une seule recette à la fois
+    function afficheRecette(id) {
+      document.querySelectorAll('.recette-content').forEach(el => {
+        if (el.id === id) {
+          el.classList.toggle('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
     }
   </script>
 
