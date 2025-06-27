@@ -3,15 +3,11 @@
 <head>
   <title>CookZen</title>
   <style>
-    body {
-      margin: 0;
-    }
+    body { margin: 0; }
 
     .footer {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; left: 0; width: 100%;
       background: #db3131;
       color: white;
       display: flex;
@@ -24,10 +20,7 @@
 
     .barre {
       position: fixed;
-      top: 215px;
-      left: 0;
-      width: 100%;
-      height: 10px;
+      top: 215px; left: 0; width: 100%; height: 10px;
       background: black;
     }
 
@@ -37,8 +30,8 @@
       font-size: 40px;
     }
 
-    /* Discord login/logo/avatar zone */
-    .discord-login {
+    /* Zone pour Discord (logo ou avatar + nom) */
+    .discord-zone {
       position: absolute;
       top: 15px;
       right: 30px;
@@ -46,23 +39,23 @@
       align-items: center;
       gap: 10px;
       color: white;
-      font-size: 18px;
-      text-decoration: none;
+      font-size: 20px;
     }
-
-    .discord-login img {
+    .discord-zone img {
       width: 65px;
       height: 65px;
       border-radius: 50%;
       border: none;
       box-shadow: none;
+      cursor: pointer;
+    }
+    .discord-zone span {
+      /* nom Discord si connecté */
     }
 
-    /* Boutons sans gluten */
     .button-container {
       margin-top: 40px;
     }
-
     .button-container button {
       font-size: 24px;
       padding: 10px 20px;
@@ -73,7 +66,6 @@
       color: white;
       cursor: pointer;
     }
-
     .button-container button:hover {
       background-color: #b42828;
     }
@@ -81,26 +73,21 @@
 </head>
 <body>
 
-  <!-- FOOTER avec logo/connexion -->
   <div class="footer">
     CookZen
 
-    <!-- Logo Discord (par défaut, visible si pas connecté) -->
-    <a id="login-btn" class="discord-login" href="#">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord Logo">
-    </a>
-
-    <!-- Avatar + nom utilisateur (visible après connexion) -->
-    <div id="user-info" class="discord-login" style="display: none;"></div>
+    <!-- Zone Discord au top right -->
+    <div id="discord-zone" class="discord-zone">
+      <a id="login-btn" href="#">
+        <img src="https://cdn.discordapp.com/attachments/1073431627499750716/1084340182678867516/discord_stay_safe_icon.png" alt="Discord logo">
+      </a>
+    </div>
   </div>
 
-  <!-- Barre noire -->
   <div class="barre"></div>
 
-  <!-- CONTENU PRINCIPAL -->
   <div class="contenu">
     <p>Contenu de la page</p>
-
     <div class="button-container">
       <button onclick="window.location.href='pain.html'">🍞 Pain sans gluten</button>
       <button onclick="window.location.href='pizza.html'">🍕 Pâte à pizza sans gluten</button>
@@ -108,22 +95,18 @@
     </div>
   </div>
 
-  <!-- SCRIPT DISCORD -->
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-
     const loginBtn = document.getElementById('login-btn');
-    const userInfo = document.getElementById('user-info');
-
+    const discordZone = document.getElementById('discord-zone');
     loginBtn.href = AUTH_URL;
 
     function getToken() {
       const hash = window.location.hash;
-      if (hash.includes("access_token")) {
-        const params = new URLSearchParams(hash.substring(1));
-        return params.get("access_token");
+      if (hash.includes('access_token')) {
+        return new URLSearchParams(hash.substring(1)).get('access_token');
       }
       return null;
     }
@@ -131,17 +114,13 @@
     const token = getToken();
 
     if (token) {
-      loginBtn.style.display = 'none'; // cacher le logo Discord
-      userInfo.style.display = 'flex'; // montrer avatar + nom
-
+      loginBtn.style.display = 'none';
       fetch('https://discord.com/api/users/@me', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       })
-      .then(resp => resp.json())
+      .then(r => r.json())
       .then(user => {
-        userInfo.innerHTML = `
+        discordZone.innerHTML = `
           <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar Discord">
           <span>${user.username}#${user.discriminator}</span>
         `;
