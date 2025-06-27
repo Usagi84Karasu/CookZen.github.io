@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CookZen</title>
   <style>
-    body { margin: 0; }
+    body { margin: 0; font-family: sans-serif; }
 
+    /* FOOTER */
     .footer {
       position: fixed;
       top: 0; left: 0; width: 100%;
@@ -13,66 +16,75 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 75px;
+      padding: 60px 0;
       box-sizing: border-box;
-      font-size: 60px;
+      font-size: 36px;
     }
-
-    .barre {
-      position: fixed;
-      top: 215px; left: 0;
-      width: 100%; height: 10px;
-      background: black;
-    }
-
+    .barre { position: fixed; top: 140px; left: 0; width: 100%; height: 8px; background:black; }
     .contenu {
-      margin-top: 230px;
-      padding: 20px;
-      font-size: 40px;
+      margin-top: 160px;
+      padding: 10px;
+      font-size: 18px;
     }
 
+    /* Discord logo/avatar */
     .discord-zone {
       position: absolute;
-      top: 10px;
-      right: 20px;
+      top: 10px; right: 10px;
       text-align: center;
     }
-
     .discord-zone img {
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       border: none;
       box-shadow: none;
       display: block;
       margin: 0 auto;
     }
-
     .discord-zone span {
       display: block;
-      margin-top: 10px;
-      font-size: 22px;
+      margin-top: 6px;
+      font-size: 24px;
       color: white;
       text-align: center;
     }
 
+    /* Boutons recettes */
     .button-container {
-      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 10px 0;
     }
-
     .button-container button {
-      font-size: 24px;
-      padding: 10px 20px;
-      margin: 10px;
+      font-size: 20px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
-      background-color: #db3131;
+      background: #db3131;
       color: white;
       cursor: pointer;
     }
-
     .button-container button:hover {
-      background-color: #b42828;
+      background: #b42828;
+    }
+
+    /* Recette sections */
+    .recette {
+      display: none;
+    }
+    .recette.active {
+      display: block;
+    }
+
+    /* Mobile optimisations */
+    @media (max-width: 480px) {
+      .footer { font-size: 28px; padding: 50px 0; }
+      .discord-zone img { width: 120px; height: 120px; }
+      .discord-zone span { font-size: 20px; }
+      .button-container button { font-size: 18px; padding: 10px; }
+      .contenu { font-size: 16px; }
     }
   </style>
 </head>
@@ -80,9 +92,7 @@
 
   <div class="footer">
     CookZen
-
     <div id="discord-zone" class="discord-zone">
-      <!-- Logo Discord par défaut -->
       <a id="login-btn" href="#">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Logo Discord">
       </a>
@@ -92,51 +102,84 @@
   <div class="barre"></div>
 
   <div class="contenu">
-    <p>Contenu de la page</p>
     <div class="button-container">
-      <button onclick="window.location.href='pain.html'">🍞 Pain sans gluten</button>
-      <button onclick="window.location.href='pizza.html'">🍕 Pâte à pizza sans gluten</button>
-      <button onclick="window.location.href='cookie.html'">🍪 Cookies sans gluten</button>
+      <button data-rec="pain">🍞 Pain sans gluten</button>
+      <button data-rec="pizza">🍕 Pâte à pizza sans gluten</button>
+      <button data-rec="cookies">🍪 Cookies sans gluten</button>
+    </div>
+
+    <div id="pain" class="recette">
+      <h2>🍞 Pain sans gluten</h2>
+      <ul>
+        <li>250 g farine de riz</li>
+        <li>100 g fécule de maïs</li>
+        <li>1 sachet levure</li>
+        <li>300 ml eau tiède</li>
+        <li>1 c. à s. huile d'olive</li>
+        <li>1 c. à c. sel</li>
+      </ul>
+      <p>Mélange, laisse reposer 1h, puis cuire 45 min à 200 °C.</p>
+    </div>
+
+    <div id="pizza" class="recette">
+      <h2>🍕 Pâte à pizza sans gluten</h2>
+      <ul>
+        <li>200 g farine sans gluten</li>
+        <li>1/2 sachet levure</li>
+        <li>120 ml eau tiède</li>
+        <li>1 c. à s. huile d'olive</li>
+        <li>1 pincée de sel</li>
+      </ul>
+      <p>Mélange, repose 1h, étale, ajoute ta garniture, cuis 15 min à 220 °C.</p>
+    </div>
+
+    <div id="cookies" class="recette">
+      <h2>🍪 Cookies sans gluten</h2>
+      <ul>
+        <li>100 g beurre mou</li>
+        <li>100 g sucre</li>
+        <li>1 œuf</li>
+        <li>150 g poudre d’amande</li>
+        <li>Pépites de chocolat</li>
+      </ul>
+      <p>Mélange, forme boules, cuis 10‑12 min à 180 °C.</p>
     </div>
   </div>
 
   <script>
+    // Discord OAuth
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-
     const loginBtn = document.getElementById('login-btn');
-    const discordZone = document.getElementById('discord-zone');
     loginBtn.href = AUTH_URL;
+    const discordZone = document.getElementById('discord-zone');
 
     function getToken() {
       const hash = window.location.hash;
-      if (hash.includes('access_token')) {
-        return new URLSearchParams(hash.substring(1)).get('access_token');
-      }
-      return null;
+      return hash.includes('access_token') ? new URLSearchParams(hash.substring(1)).get('access_token') : null;
     }
 
     const token = getToken();
-
     if (token) {
       loginBtn.style.display = 'none';
-
-      fetch('https://discord.com/api/users/@me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(r => r.json())
-      .then(user => {
-        const username = user.username;
-        const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-
-        // Affiche avatar + pseudo (centré et en gros)
-        discordZone.innerHTML = `
-          <img src="${avatarURL}" alt="Avatar Discord">
-          <span>${username}</span>
-        `;
-      });
+      fetch('https://discord.com/api/users/@me', { headers: { Authorization: `Bearer ${token}` } })
+        .then(r => r.json())
+        .then(user => {
+          const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+          discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
+        });
     }
+
+    // Recette interactive mobile
+    const buttons = document.querySelectorAll('.button-container button');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.recette').forEach(r => r.classList.remove('active'));
+        document.getElementById(btn.dataset.rec).classList.add('active');
+        window.scrollTo({ top: 160, behavior: 'smooth' });
+      });
+    });
   </script>
 
 </body>
