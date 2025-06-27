@@ -20,7 +20,6 @@
       padding: 75px;
       box-sizing: border-box;
       font-size: 60px;
-      position: fixed;
     }
 
     .barre {
@@ -38,7 +37,7 @@
       font-size: 40px;
     }
 
-    /* Discord logo / avatar */
+    /* Discord login/logo/avatar zone */
     .discord-login {
       position: absolute;
       top: 15px;
@@ -47,7 +46,7 @@
       align-items: center;
       gap: 10px;
       color: white;
-      font-size: 20px;
+      font-size: 18px;
       text-decoration: none;
     }
 
@@ -55,8 +54,8 @@
       width: 65px;
       height: 65px;
       border-radius: 50%;
-      box-shadow: none;
       border: none;
+      box-shadow: none;
     }
 
     /* Boutons sans gluten */
@@ -82,19 +81,23 @@
 </head>
 <body>
 
+  <!-- FOOTER avec logo/connexion -->
   <div class="footer">
     CookZen
 
-    <!-- Logo ou avatar Discord en haut à droite -->
+    <!-- Logo Discord (par défaut, visible si pas connecté) -->
     <a id="login-btn" class="discord-login" href="#">
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord Logo">
     </a>
 
+    <!-- Avatar + nom utilisateur (visible après connexion) -->
     <div id="user-info" class="discord-login" style="display: none;"></div>
   </div>
 
+  <!-- Barre noire -->
   <div class="barre"></div>
 
+  <!-- CONTENU PRINCIPAL -->
   <div class="contenu">
     <p>Contenu de la page</p>
 
@@ -105,6 +108,7 @@
     </div>
   </div>
 
+  <!-- SCRIPT DISCORD -->
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
@@ -127,8 +131,8 @@
     const token = getToken();
 
     if (token) {
-      loginBtn.style.display = 'none';
-      userInfo.style.display = 'flex';
+      loginBtn.style.display = 'none'; // cacher le logo Discord
+      userInfo.style.display = 'flex'; // montrer avatar + nom
 
       fetch('https://discord.com/api/users/@me', {
         headers: {
@@ -138,7 +142,7 @@
       .then(resp => resp.json())
       .then(user => {
         userInfo.innerHTML = `
-          <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar">
+          <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Avatar Discord">
           <span>${user.username}#${user.discriminator}</span>
         `;
       });
