@@ -245,6 +245,36 @@
         }
       });
     }
+
+const hearts = document.querySelectorAll('.heart');
+    let filterOn = false;
+    const filterBtn = document.getElementById('filter-btn');
+
+    hearts.forEach(heart => {
+      hearts.addEventListener('click', () => {
+        heart.classList.toggle('fav');
+        heart.textContent = heart.classList.contains('fav') ? '❤' : '🤍';
+      });
+    });
+
+    filterBtn.addEventListerner('click', () => {
+      filterOn = !filterOn;
+
+      if (filterOn) {
+        filterBtn.textContent = "Afficher tout";
+        document.querySelectorAll('.item').forEach(item => {
+          const heart = item.querySelector('.heart');
+            if (!heart.classList.contains('fav')) {
+              item.style.display = 'none';
+            }
+        });
+      } else {
+        filterBtn.textContent = "Afficher les Favoris";
+        document.querySelectorAll('.item').forEach(item => {
+          item.style.display = 'inline-block';
+        });
+      }
+    });
   </script>
 
 </body>
