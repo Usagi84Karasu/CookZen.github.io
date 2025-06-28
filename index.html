@@ -1,4 +1,4 @@
-pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer, et le coeur on ne peux pas le mettre en rouge <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -69,6 +69,7 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     .recette-title {
       font-size: 20px;
       font-weight: bold;
+      position: relative; /* pour positionner le cœur */
     }
 
     .voir-btn, .etape-btn {
@@ -104,12 +105,13 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     .heart {
       font-size: 30px;
       color: white;
-      cursor: pointer;
+      cursor: pointer; /* corrigé */
       transition: 0.3s;
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0;
+      right: -40px; /* ajusté pour être à droite du titre */
       text-shadow: 0 0 2px black;
+      user-select: none; /* empêche sélection du texte en cliquant */
     }
 
     .heart.fav {
@@ -128,20 +130,25 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
       position: relative;
     }
 
-    #filtrer-btn {
+    /* Correction de l'ID pour matcher HTML */
+    #filter-btn {
       margin-bottom: 20px;
       padding: 10px 20px;
-      background-color: #5865F2;
+      background-color: #5865F2; /* point-virgule ajouté */
       color: white;
       border: none;
       border-radius: 20px;
-      cursor: pointer;
+      cursor: pointer; /* corrigé */
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 18px;
     }
 
-    #filtrer-btn:hover {
-      background-color: #404EED
+    #filter-btn:hover {
+      background-color: #404EED; /* point-virgule ajouté */
     }
 
   </style>
@@ -164,10 +171,11 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
   <div class="contenu">
 
     <div class="recette-item item">
-      <div class="recette-title heart">🤍 🍞 Pain sans gluten ; 
+      <div class="recette-title">🍞 Pain sans gluten ;
+        <span class="heart">🤍</span>
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
-      <div id="pain recette-content">
+      <div id="pain" class="recette-content">
         <ul>
           <li>250 g farine de riz</li>
           <li>100 g fécule de maïs</li>
@@ -181,7 +189,8 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     </div>
 
     <div class="recette-item item">
-      <div class="recette-title heart">🤍 🍕 Pâte à pizza sans gluten ; 
+      <div class="recette-title">🍕 Pâte à pizza sans gluten ;
+        <span class="heart">🤍</span>
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -197,7 +206,8 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     </div>
 
     <div class="recette-item item">
-      <div class="recette-title heart">🤍 🍪 Cookies sans gluten ;
+      <div class="recette-title">🍪 Cookies sans gluten ;
+        <span class="heart">🤍</span>
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -253,12 +263,12 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
       });
     }
 
-const hearts = document.querySelectorAll('.heart');
+    const hearts = document.querySelectorAll('.heart');
     let filterOn = false;
     const filterBtn = document.getElementById('filter-btn');
 
     hearts.forEach(heart => {
-      hearts.addEventListener('click', () => {
+      heart.addEventListener('click', () => {
         heart.classList.toggle('fav');
         heart.textContent = heart.classList.contains('fav') ? '❤' : '🤍';
       });
@@ -271,9 +281,9 @@ const hearts = document.querySelectorAll('.heart');
         filterBtn.textContent = "Afficher tout";
         document.querySelectorAll('.item').forEach(item => {
           const heart = item.querySelector('.heart');
-            if (!heart.classList.contains('fav')) {
-              item.style.display = 'none';
-            }
+          if (!heart.classList.contains('fav')) {
+            item.style.display = 'none';
+          }
         });
       } else {
         filterBtn.textContent = "Afficher les Favoris";
