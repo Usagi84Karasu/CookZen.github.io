@@ -69,7 +69,6 @@
     .recette-title {
       font-size: 20px;
       font-weight: bold;
-      position: relative; /* pour positionner le cœur */
     }
 
     .voir-btn, .etape-btn {
@@ -105,13 +104,12 @@
     .heart {
       font-size: 30px;
       color: white;
-      cursor: pointer; /* corrigé */
+      cursor: pointeur;
       transition: 0.3s;
       position: absolute;
-      top: 0;
-      right: -40px; /* ajusté pour être à droite du titre */
+      top: 10px;
+      right: 10px;
       text-shadow: 0 0 2px black;
-      user-select: none; /* empêche sélection du texte en cliquant */
     }
 
     .heart.fav {
@@ -130,25 +128,20 @@
       position: relative;
     }
 
-    /* Correction de l'ID pour matcher HTML */
-    #filter-btn {
+    #filtrer-btn {
       margin-bottom: 20px;
       padding: 10px 20px;
-      background-color: #5865F2; /* point-virgule ajouté */
+      background-color: #5865F2
       color: white;
       border: none;
       border-radius: 20px;
-      cursor: pointer; /* corrigé */
+      cursor: pointeur;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: 0.3s;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 18px;
     }
 
-    #filter-btn:hover {
-      background-color: #404EED; /* point-virgule ajouté */
+    #filtrer-btn:hover {
+      background-color: #404EED
     }
 
   </style>
@@ -170,9 +163,8 @@
   
   <div class="contenu">
 
-    <div class="recette-item item">
-      <div class="recette-title">🍞 Pain sans gluten ;
-        <span class="heart">🤍</span>
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍞 Pain sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
@@ -188,9 +180,8 @@
       </div>
     </div>
 
-    <div class="recette-item item">
-      <div class="recette-title">🍕 Pâte à pizza sans gluten ;
-        <span class="heart">🤍</span>
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍕 Pâte à pizza sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -205,9 +196,8 @@
       </div>
     </div>
 
-    <div class="recette-item item">
-      <div class="recette-title">🍪 Cookies sans gluten ;
-        <span class="heart">🤍</span>
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍪 Cookies sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -228,7 +218,7 @@
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
-    const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
+    const AUTH_URL = https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify;
 
     const loginBtn = document.getElementById('login-btn');
     const discordZone = document.getElementById('discord-zone');
@@ -243,12 +233,12 @@
     if (token) {
       loginBtn.style.display = 'none';
       fetch('https://discord.com/api/users/@me', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: Bearer ${token} }
       })
       .then(r => r.json())
       .then(user => {
-        const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-        discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
+        const avatarURL = https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png;
+        discordZone.innerHTML = <img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>;
       });
     }
 
@@ -263,27 +253,27 @@
       });
     }
 
-    const hearts = document.querySelectorAll('.heart');
+const hearts = document.querySelectorAll('.heart');
     let filterOn = false;
     const filterBtn = document.getElementById('filter-btn');
 
     hearts.forEach(heart => {
-      heart.addEventListener('click', () => {
+      hearts.addEventListener('click', () => {
         heart.classList.toggle('fav');
         heart.textContent = heart.classList.contains('fav') ? '❤' : '🤍';
       });
     });
 
-    filterBtn.addEventListener('click', () => {
+    filterBtn.addEventListerner('click', () => {
       filterOn = !filterOn;
 
       if (filterOn) {
         filterBtn.textContent = "Afficher tout";
         document.querySelectorAll('.item').forEach(item => {
           const heart = item.querySelector('.heart');
-          if (!heart.classList.contains('fav')) {
-            item.style.display = 'none';
-          }
+            if (!heart.classList.contains('fav')) {
+              item.style.display = 'none';
+            }
         });
       } else {
         filterBtn.textContent = "Afficher les Favoris";
