@@ -55,7 +55,7 @@
     }
 
     .contenu {
-      margin-top: 135px;
+      margin-top: 140px;
       padding: 10px;
       font-size: 18px;
     }
@@ -64,11 +64,13 @@
       margin: 20px 0;
       border-bottom: 1px solid #ccc;
       padding-bottom: 10px;
+      position: relative;
     }
 
     .recette-title {
       font-size: 20px;
       font-weight: bold;
+      padding-right: 40px;
     }
 
     .voir-btn, .etape-btn {
@@ -108,7 +110,7 @@
       transition: 0.3s;
       position: absolute;
       top: 10px;
-      right: 10px;
+      left: 10px;
       text-shadow: 0 0 2px black;
     }
 
@@ -126,9 +128,10 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 150px;
       position: relative;
+      vertical-align: top;
     }
 
-   #filter-btn {
+    #filter-btn {
       margin-bottom: 20px;
       padding: 10px 20px;
       background-color: #5865F2;
@@ -140,10 +143,9 @@
       transition: 0.3s;
     }
 
-    #filtrer-btn:hover {
-      background-color: #404EED
+    #filter-btn:hover {
+      background-color: #404EED;
     }
-
   </style>
 </head>
 <body>
@@ -156,69 +158,65 @@
       </a>
     </div>
   </div>
-  
+
   <div class="barre"></div>
-  
-<div class="contenu">
 
-  <button id="filter-btn">Afficher les Favoris</button>
+  <div class="contenu">
+    <button id="filter-btn">Afficher les Favoris</button>
 
-  <div class="recette-item item">
-    <span class="heart">🤍</span>
-    <div class="recette-title">🍞 Pain sans gluten
-      <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
+    <div class="recette-item item">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍞 Pain sans gluten
+        <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
+      </div>
+      <div id="pain" class="recette-content">
+        <ul>
+          <li>250 g farine de riz</li>
+          <li>100 g fécule de maïs</li>
+          <li>1 sachet levure</li>
+          <li>300 ml eau tiède</li>
+          <li>1 c. à s. huile d'olive</li>
+          <li>1 c. à c. sel</li>
+        </ul>
+        <a class="etape-btn" href="pain.html">Voir les étapes</a>
+      </div>
     </div>
-    <div id="pain" class="recette-content">
-      <ul>
-        <li>250 g farine de riz</li>
-        <li>100 g fécule de maïs</li>
-        <li>1 sachet levure</li>
-        <li>300 ml eau tiède</li>
-        <li>1 c. à s. huile d'olive</li>
-        <li>1 c. à c. sel</li>
-      </ul>
-      <a class="etape-btn" href="pain.html">Voir les étapes</a>
+
+    <div class="recette-item item">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍕 Pâte à pizza sans gluten
+        <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
+      </div>
+      <div id="pizza" class="recette-content">
+        <ul>
+          <li>200 g farine sans gluten</li>
+          <li>1/2 sachet levure</li>
+          <li>120 ml eau tiède</li>
+          <li>1 c. à s. huile d'olive</li>
+          <li>1 pincée de sel</li>
+        </ul>
+        <a class="etape-btn" href="pizza.html">Voir les étapes</a>
+      </div>
+    </div>
+
+    <div class="recette-item item">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍪 Cookies sans gluten
+        <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
+      </div>
+      <div id="cookie" class="recette-content">
+        <ul>
+          <li>100 g beurre mou</li>
+          <li>100 g sucre</li>
+          <li>1 œuf</li>
+          <li>150 g poudre d’amande</li>
+          <li>Pépites de chocolat</li>
+        </ul>
+        <a class="etape-btn" href="cookie.html">Voir les étapes</a>
+      </div>
     </div>
   </div>
 
-  <div class="recette-item item">
-    <span class="heart">🤍</span>
-    <div class="recette-title">🍕 Pâte à pizza sans gluten
-      <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
-    </div>
-    <div id="pizza" class="recette-content">
-      <ul>
-        <li>200 g farine sans gluten</li>
-        <li>1/2 sachet levure</li>
-        <li>120 ml eau tiède</li>
-        <li>1 c. à s. huile d'olive</li>
-        <li>1 pincée de sel</li>
-      </ul>
-      <a class="etape-btn" href="pizza.html">Voir les étapes</a>
-    </div>
-  </div>
-
-  <div class="recette-item item">
-    <span class="heart">🤍</span>
-    <div class="recette-title">🍪 Cookies sans gluten
-      <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
-    </div>
-    <div id="cookie" class="recette-content">
-      <ul>
-        <li>100 g beurre mou</li>
-        <li>100 g sucre</li>
-        <li>1 œuf</li>
-        <li>150 g poudre d’amande</li>
-        <li>Pépites de chocolat</li>
-      </ul>
-      <a class="etape-btn" href="cookie.html">Voir les étapes</a>
-    </div>
-  </div>
-
-</div>
-
-
-  <!-- ======= SCRIPT ======= -->
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
@@ -246,7 +244,6 @@
       });
     }
 
-    // Afficher une seule recette à la fois
     function afficheRecette(id) {
       document.querySelectorAll('.recette-content').forEach(el => {
         if (el.id === id) {
@@ -257,7 +254,7 @@
       });
     }
 
-const hearts = document.querySelectorAll('.heart');
+    const hearts = document.querySelectorAll('.heart');
     let filterOn = false;
     const filterBtn = document.getElementById('filter-btn');
 
@@ -275,9 +272,9 @@ const hearts = document.querySelectorAll('.heart');
         filterBtn.textContent = "Afficher tout";
         document.querySelectorAll('.item').forEach(item => {
           const heart = item.querySelector('.heart');
-            if (!heart.classList.contains('fav')) {
-              item.style.display = 'none';
-            }
+          if (!heart.classList.contains('fav')) {
+            item.style.display = 'none';
+          }
         });
       } else {
         filterBtn.textContent = "Afficher les Favoris";
