@@ -61,18 +61,18 @@
     }
 
     .recette-item {
-      margin: 20px;
+      margin: 20px 0;
       border-bottom: 1px solid #ccc;
-      padding: 10px;
-      background: #f5f5f5;
+      padding-bottom: 10px;
+      background: #fff;
       border-radius: 12px;
+      padding: 15px;
       position: relative;
     }
 
     .recette-title {
       font-size: 20px;
       font-weight: bold;
-      margin-bottom: 10px;
     }
 
     .voir-btn, .etape-btn {
@@ -98,19 +98,20 @@
     }
 
     .heart {
-      font-size: 30px;
+      font-size: 24px;
       color: white;
       cursor: pointer;
-      transition: 0.3s;
-      position: absolute;
-      top: 10px;
-      right: 10px;
+      margin-right: 8px;
       text-shadow: 0 0 2px black;
     }
 
     .heart.fav {
       color: red;
       text-shadow: none;
+    }
+
+    .item {
+      display: block;
     }
 
     #filter-btn {
@@ -136,7 +137,6 @@
       .discord-zone span { font-size: 12px; }
       .recette-title { font-size: 18px; }
     }
-
   </style>
 </head>
 <body>
@@ -158,8 +158,7 @@
 
     <div class="recette-item item">
       <div class="recette-title">
-        🍞 Pain sans gluten
-        <span class="heart">🤍</span>
+        <span class="heart">🤍</span>🍞 Pain sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
@@ -177,8 +176,7 @@
 
     <div class="recette-item item">
       <div class="recette-title">
-        🍕 Pâte à pizza sans gluten
-        <span class="heart">🤍</span>
+        <span class="heart">🤍</span>🍕 Pâte à pizza sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -195,8 +193,7 @@
 
     <div class="recette-item item">
       <div class="recette-title">
-        🍪 Cookies sans gluten
-        <span class="heart">🤍</span>
+        <span class="heart">🤍</span>🍪 Cookies sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -213,7 +210,6 @@
 
   </div>
 
-  <!-- ======= SCRIPT ======= -->
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
@@ -241,14 +237,9 @@
       });
     }
 
-    // Afficher une seule recette à la fois
     function afficheRecette(id) {
       document.querySelectorAll('.recette-content').forEach(el => {
-        if (el.id === id) {
-          el.classList.toggle('active');
-        } else {
-          el.classList.remove('active');
-        }
+        el.classList.toggle('active', el.id === id ? !el.classList.contains('active') : false);
       });
     }
 
@@ -256,7 +247,6 @@
     let filterOn = false;
     const filterBtn = document.getElementById('filter-btn');
 
-    // Coeurs cliquables
     hearts.forEach(heart => {
       heart.addEventListener('click', () => {
         heart.classList.toggle('fav');
@@ -264,26 +254,14 @@
       });
     });
 
-    // Filtrer les favoris
     filterBtn.addEventListener('click', () => {
       filterOn = !filterOn;
-
-      if (filterOn) {
-        filterBtn.textContent = "Afficher tout";
-        document.querySelectorAll('.item').forEach(item => {
-          const heart = item.querySelector('.heart');
-          if (!heart.classList.contains('fav')) {
-            item.style.display = 'none';
-          }
-        });
-      } else {
-        filterBtn.textContent = "Afficher les Favoris";
-        document.querySelectorAll('.item').forEach(item => {
-          item.style.display = 'block';
-        });
-      }
+      filterBtn.textContent = filterOn ? "Afficher tout" : "Afficher les Favoris";
+      document.querySelectorAll('.item').forEach(item => {
+        const heart = item.querySelector('.heart');
+        item.style.display = (filterOn && !heart.classList.contains('fav')) ? 'none' : 'block';
+      });
     });
   </script>
-
 </body>
 </html>
