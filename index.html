@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CookZen</title>
+  <title>CookZen (mobile)</title>
   <style>
     body { margin: 0; font-family: sans-serif; }
 
@@ -123,18 +123,25 @@
       margin: 10px;
       padding: 20px;
       border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 150px;
       position: relative;
     }
 
     #filtrer-btn {
-      magin-bottom: 20px;
+      margin-bottom: 20px;
       padding: 10px 20px;
+      background-color: #5865F2
       color: white;
       border: none;
       border-radius: 20px;
       cursor: pointeur;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: 0.3s;
+    }
+
+    #filtrer-btn:hover {
+      background-color: #404EED
     }
 
   </style>
@@ -158,7 +165,7 @@
 
     <div class="recette-item" class="item">
       <div class="recette-title" class="heart">🤍 🍞 Pain sans gluten ; 
-        <button class="voir-btn" onclick="afficheRecette('.pain')">Voir la recette</button>
+        <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
         <ul>
@@ -211,7 +218,7 @@
   <script>
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
-    const AUTH_URL = https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify;
+    const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
     const loginBtn = document.getElementById('login-btn');
     const discordZone = document.getElementById('discord-zone');
@@ -226,12 +233,12 @@
     if (token) {
       loginBtn.style.display = 'none';
       fetch('https://discord.com/api/users/@me', {
-        headers: { Authorization: Bearer ${token} }
+        headers: { Authorization: `Bearer ${token}` }
       })
       .then(r => r.json())
       .then(user => {
-        const avatarURL = https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png;
-        discordZone.innerHTML = <img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>;
+        const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+        discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
       });
     }
 
