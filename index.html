@@ -104,7 +104,7 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     .heart {
       font-size: 30px;
       color: white;
-      cursor: pointeur;
+      cursor: pointer;
       transition: 0.3s;
       position: absolute;
       top: 10px;
@@ -131,11 +131,11 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
     #filtrer-btn {
       margin-bottom: 20px;
       padding: 10px 20px;
-      background-color: #5865F2
+      background-color: #5865F2;
       color: white;
       border: none;
       border-radius: 20px;
-      cursor: pointeur;
+      cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       transition: 0.3s;
     }
@@ -163,11 +163,11 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
   
   <div class="contenu">
 
-    <div class="recette-item" class="item">
-      <div class="recette-title" class="heart">🤍 🍞 Pain sans gluten ; 
+    <div class="recette-item item">
+      <div class="recette-title heart">🤍 🍞 Pain sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
-      <div id="pain" class="recette-content">
+      <div id="pain recette-content">
         <ul>
           <li>250 g farine de riz</li>
           <li>100 g fécule de maïs</li>
@@ -180,8 +180,8 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
       </div>
     </div>
 
-    <div class="recette-item" class="item">
-      <div class="recette-title" class="heart">🤍 🍕 Pâte à pizza sans gluten ; 
+    <div class="recette-item item">
+      <div class="recette-title heart">🤍 🍕 Pâte à pizza sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -196,8 +196,8 @@ pourquoi es ce que sa ne marche toujours pas, il y a pas le bouton pour filtrer,
       </div>
     </div>
 
-    <div class="recette-item" class="item">
-      <div class="recette-title" class="heart">🤍 🍪 Cookies sans gluten ;
+    <div class="recette-item item">
+      <div class="recette-title heart">🤍 🍪 Cookies sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -264,7 +264,7 @@ const hearts = document.querySelectorAll('.heart');
       });
     });
 
-    filterBtn.addEventListerner('click', () => {
+    filterBtn.addEventListener('click', () => {
       filterOn = !filterOn;
 
       if (filterOn) {
