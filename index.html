@@ -7,7 +7,6 @@
   <style>
     body { margin: 0; font-family: sans-serif; }
 
-    /* ======= HEADER FIXÉ ======= */
     .footer {
       position: fixed;
       top: 0; left: 0;
@@ -61,7 +60,6 @@
       font-size: 18px;
     }
 
-    /* ======= RECETTES ======= */
     .recette-item {
       margin: 20px 0;
       border-bottom: 1px solid #ccc;
@@ -102,11 +100,47 @@
       .discord-zone span { font-size: 12px; }
       .recette-title { font-size: 18px; }
     }
+
+    .heart {
+      font-size: 30px;
+      color: white;
+      cursor: pointeur;
+      transition: 0.3s;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      text-shadow: 0 0 2px black;
+    }
+
+    .heart.fav {
+      color: red;
+      text-shadow: none;
+    }
+
+    .item {
+      display: inline-block;
+      background: white;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 15px;
+      width: 150px;
+      position: relative;
+    }
+
+    #filtrer-btn {
+      magin-bottom: 20px;
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointeur;
+      transition: 0.3s;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- ======= HEADER ======= -->
   <div class="footer">
     CookZen
     <div id="discord-zone" class="discord-zone">
@@ -118,11 +152,12 @@
 
   <div class="barre"></div>
 
-  <!-- ======= CONTENU ======= -->
+  <button id="filter-btn">Afficher les Favoris</button>
+  
   <div class="contenu">
 
-    <div class="recette-item">
-      <div class="recette-title">🍞 Pain sans gluten ; 
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍞 Pain sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
@@ -138,8 +173,8 @@
       </div>
     </div>
 
-    <div class="recette-item">
-      <div class="recette-title">🍕 Pâte à pizza sans gluten ; 
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍕 Pâte à pizza sans gluten ; 
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -154,8 +189,8 @@
       </div>
     </div>
 
-    <div class="recette-item">
-      <div class="recette-title">🍪 Cookies sans gluten ; 
+    <div class="recette-item" class="item">
+      <div class="recette-title" class="heart">🤍 🍪 Cookies sans gluten ;
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
