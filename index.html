@@ -1,4 +1,4 @@
-sa marche mais juste la 1ere lettre de la recherche ne s'effectue pas <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -215,8 +215,8 @@ function filterRecipes() {
   const recipes = document.querySelectorAll("#recipeList .recette-item");
 
   recipes.forEach(recipe => {
-    const text = recipe.textContent.toLowerCase();
-    recipe.style.display = text.includes(input) ? "" : "none";
+    const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
+    recipe.style.display = title.includes(input) ? "" : "none";
   });
 }
     
