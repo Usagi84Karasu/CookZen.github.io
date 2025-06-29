@@ -25,44 +25,6 @@
       z-index: 10;
     }
 
-   .discord-zone {
-  width: 70px;
-  height: 70px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  text-align: center;
-  z-index: 11; /* pour rester au-dessus */
-}
-
-.discord-zone img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto;
-}
-
-.discord-zone span {
-  width: 70px;
-  height: 70px;
-  display: block;
-  font-size: 14px;
-  margin-top: 4px;
-  color: white;
-}
-
-@media (max-width: 480px) {
-  .discord-zone img {
-    width: 60px;
-    height: 60px;
-  }
-
-  .discord-zone span {
-    font-size: 12px;
-  }
-}
-
     .barre {
       position: fixed;
       top: 120px;
@@ -182,9 +144,6 @@
 
 <div class="footer">
   <div class="cookzen-title">CookZen</div>
-  <div id="discord-zone" class="discord-zone">
-    <a id="login-btn" href="#"> <img src="https://static.vecteezy.com/system/resources/previews/018/930/500/non_2x/discord-logo-discord-icon-transparent-free-png.png" alt="Logo Discord"> </a>
-  </div>
 </div>
 
 
@@ -306,44 +265,6 @@ function filterRecipes() {
     const shouldBeVisible = matchesSearch && (!filterOn || isFavorite);
 
     recipe.style.display = shouldBeVisible ? "" : "none";
-  });
-}
-
-const CLIENT_ID = '1387928652041162892';
-const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
-const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
-
-const loginBtn = document.getElementById('login-btn');
-const discordZone = document.getElementById('discord-zone');
-loginBtn.href = AUTH_URL;
-
-// ✅ NOUVELLE VERSION de getToken pour stocker le token
-function getToken() {
-  const hash = window.location.hash;
-
-  if (hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.substring(1));
-    const token = params.get('access_token');
-
-    localStorage.setItem('discord_token', token); // Stocker le token
-    window.location.hash = ''; // Nettoyer l’URL
-
-    return token;
-  }
-
-  return localStorage.getItem('discord_token'); // Récupérer le token stocké
-}
-
-const token = getToken();
-if (token) {
-  loginBtn.style.display = 'none';
-  fetch('https://discord.com/api/users/@me', {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  .then(r => r.json())
-  .then(user => {
-    const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-    discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
   });
 }
 
