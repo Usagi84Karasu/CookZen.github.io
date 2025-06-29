@@ -250,8 +250,7 @@
   </div>
   </div>
 
-  <script>
-
+<script>
 function filterRecipes() {
   const input = document.getElementById("searchInput").value.toLowerCase();
   const recipes = document.querySelectorAll("#recipeList .recette-item");
@@ -266,42 +265,54 @@ function filterRecipes() {
     recipe.style.display = shouldBeVisible ? "" : "none";
   });
 }
-    
-    const CLIENT_ID = '1387928652041162892';
-    const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
-    const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
-    const loginBtn = document.getElementById('login-btn');
-    const discordZone = document.getElementById('discord-zone');
-    loginBtn.href = AUTH_URL;
+const CLIENT_ID = '1387928652041162892';
+const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
+const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
 
-    function getToken() {
-      const hash = window.location.hash;
-      return hash.includes('access_token') ? new URLSearchParams(hash.substring(1)).get('access_token') : null;
+const loginBtn = document.getElementById('login-btn');
+const discordZone = document.getElementById('discord-zone');
+loginBtn.href = AUTH_URL;
+
+// ✅ NOUVELLE VERSION de getToken pour stocker le token
+function getToken() {
+  const hash = window.location.hash;
+
+  if (hash.includes('access_token')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+
+    localStorage.setItem('discord_token', token); // Stocker le token
+    window.location.hash = ''; // Nettoyer l’URL
+
+    return token;
+  }
+
+  return localStorage.getItem('discord_token'); // Récupérer le token stocké
+}
+
+const token = getToken();
+if (token) {
+  loginBtn.style.display = 'none';
+  fetch('https://discord.com/api/users/@me', {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(r => r.json())
+  .then(user => {
+    const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+    discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
+  });
+}
+
+function afficheRecette(id) {
+  document.querySelectorAll('.recette-content').forEach(el => {
+    if (el.id === id) {
+      el.classList.toggle('active');
+    } else {
+      el.classList.remove('active');
     }
-
-    const token = getToken();
-    if (token) {
-      loginBtn.style.display = 'none';
-      fetch('https://discord.com/api/users/@me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(r => r.json())
-      .then(user => {
-        const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-        discordZone.innerHTML = `<img src="${avatarURL}" alt="Avatar"><span>${user.username}</span>`;
-      });
-    }
-
-    function afficheRecette(id) {
-      document.querySelectorAll('.recette-content').forEach(el => {
-        if (el.id === id) {
-          el.classList.toggle('active');
-        } else {
-          el.classList.remove('active');
-        }
-      });
-    }
+  });
+}
 
 let filterOn = false;
 const filterBtn = document.getElementById('filter-btn');
@@ -311,10 +322,9 @@ let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
 
 // Applique les favoris enregistrés
 document.querySelectorAll('.recette-item').forEach(item => {
-  const id = item.getAttribute('data-id');
+  const id = item.querySelector('.recette-title').getAttribute('data-id');
   const heart = item.querySelector('.heart');
 
-  // Si l'ID de la recette est dans les favoris, on l'affiche en rouge
   if (favoris.includes(id)) {
     heart.classList.add('fav');
     heart.textContent = '🤎';
@@ -323,7 +333,6 @@ document.querySelectorAll('.recette-item').forEach(item => {
     heart.textContent = '🤍';
   }
 
-  // Ajoute l'écouteur pour clic sur le cœur
   heart.addEventListener('click', () => {
     const isFav = heart.classList.toggle('fav');
     heart.textContent = isFav ? '🤎' : '🤍';
@@ -334,29 +343,29 @@ document.querySelectorAll('.recette-item').forEach(item => {
       favoris = favoris.filter(favId => favId !== id);
     }
 
-    // Sauvegarde les nouveaux favoris
     localStorage.setItem('favoris', JSON.stringify(favoris));
   });
 });
 
-    filterBtn.addEventListener('click', () => {
-      filterOn = !filterOn;
+filterBtn.addEventListener('click', () => {
+  filterOn = !filterOn;
 
-      if (filterOn) {
-        filterBtn.textContent = "Afficher tout";
-        document.querySelectorAll('.recette-item').forEach(item => {
-          const heart = item.querySelector('.heart');
-          if (!heart.classList.contains('fav')) {
-            item.style.display = 'none';
-          }
-        });
-      } else {
-        filterBtn.textContent = "Afficher les Favoris";
-        document.querySelectorAll('.recette-item').forEach(item => {
-          item.style.display = 'block';
-        });
+  if (filterOn) {
+    filterBtn.textContent = "Afficher tout";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      const heart = item.querySelector('.heart');
+      if (!heart.classList.contains('fav')) {
+        item.style.display = 'none';
       }
     });
-  </script>
+  } else {
+    filterBtn.textContent = "Afficher les Favoris";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      item.style.display = 'block';
+    });
+  }
+});
+</script>
+  
 </body>
 </html>
