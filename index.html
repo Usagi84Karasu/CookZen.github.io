@@ -25,29 +25,39 @@
       z-index: 10;
     }
 
-    .discord-zone {
-      position: absolute;
-      top: 35px;
-      right: 20px;
-      text-align: center;
-      width: 35px;
-      height: 35px;
-    }
+   .discord-zone {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: center;
+  z-index: 11; /* pour rester au-dessus */
+}
 
-    .discord-zone img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: block;
-      margin: 0 auto;
-    }
+.discord-zone img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
 
-    .discord-zone span {
-      display: block;
-      font-size: 14px;
-      margin-top: 4px;
-      color: white;
-    }
+.discord-zone span {
+  display: block;
+  font-size: 14px;
+  margin-top: 4px;
+  color: white;
+}
+
+@media (max-width: 480px) {
+  .discord-zone img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .discord-zone span {
+    font-size: 12px;
+  }
+}
 
     .barre {
       position: fixed;
@@ -60,10 +70,16 @@
     }
 
     .contenu {
-      margin-top: 140px;
-      padding: 20px;
-      font-size: 18px;
-    }
+  margin-top: 140px;
+  padding: 20px;
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  .contenu {
+    margin-top: 120px; /* réduit l'espace blanc sur petit écran */
+  }
+}
 
     .recette-item {
       margin-bottom: 30px;
@@ -89,6 +105,16 @@
       cursor: pointer;
       display: inline-block;
     }
+
+    .search-input {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
 
     .recette-content {
       display: none;
@@ -161,7 +187,8 @@
   <div class="barre"></div>
 
   <div class="contenu">
-    <input type="text" id="searchInput" placeholder="Rechercher une recette..." onkeyup="filterRecipes()" style="margin: 20px; padding: 10px; width: 90%; border-radius: 10px; border: 1px solid #ccc;">
+   <input type="text" id="searchInput" class="search-input" placeholder="Rechercher une recette..." onkeyup="filterRecipes()">
+
     <button id="filter-btn">Afficher les Favoris</button>
     
 <div id="recipeList">
