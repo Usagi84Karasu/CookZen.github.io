@@ -211,28 +211,37 @@
   <script>
 
 function filterRecipes() {
-  const normalize = str => str
+  const input = document.getElementById("searchInput").value
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // enlève les accents
-    .replace(/\u00A0|\u202F/g, " ")  // remplace les espaces insécables
+    .replace(/[\u0300-\u036f]/g, "")  // accents
+    .replace(/\u00A0|\u202F/g, " ")   // espaces insécables
     .trim();
 
-  const input = normalize(document.getElementById("searchInput").value);
   const recipes = document.querySelectorAll("#recipeList .recette-item");
 
   recipes.forEach(recipe => {
-    const title = recipe.querySelector(".recette-title")?.textContent || "";
     const heart = recipe.querySelector(".heart");
+    const titleEl = recipe.querySelector(".recette-title");
 
-    const matchesSearch = normalize(title).includes(input);
+    // On enlève l'emoji (en supposant qu'il est au début)
+    let titleText = titleEl?.textContent || "";
+    titleText = titleText.replace(/^[^\p{L}\p{N}]+/gu, ""); // enlève les emojis ou symboles
+
+    // Normalisation
+    const titleNorm = titleText.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\u00A0|\u202F/g, " ")
+      .trim();
+
+    const matchesSearch = titleNorm.includes(input);
     const matchesFavorite = !filterOn || heart.classList.contains("fav");
 
     recipe.style.display = matchesSearch && matchesFavorite ? "" : "none";
   });
 }
 
-    
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
