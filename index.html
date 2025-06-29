@@ -198,7 +198,7 @@
 <div id="recipeList">
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍞 Pain sans gluten
+      <div class="recette-title" data-id="pain">🍞 Pain sans gluten
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir</button>
       </div>
       <div id="pain" class="recette-content">
@@ -216,7 +216,7 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍕 Pâte à pizza sans gluten
+      <div class="recette-title" data-id="pizza">🍕 Pâte à pizza sans gluten
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -233,7 +233,7 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍪 Cookies sans gluten
+      <div class="recette-title" data-id="cookies">🍪 Cookies sans gluten
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -306,32 +306,35 @@ function filterRecipes() {
 let filterOn = false;
 const filterBtn = document.getElementById('filter-btn');
 
-// Récupère les favoris depuis localStorage
+// Récupère les favoris depuis localStorage (ou tableau vide)
 let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
 
-// Applique l'état des favoris au chargement
+// Applique les favoris enregistrés
 document.querySelectorAll('.recette-item').forEach(item => {
   const id = item.getAttribute('data-id');
   const heart = item.querySelector('.heart');
 
+  // Si l'ID de la recette est dans les favoris, on l'affiche en rouge
   if (favoris.includes(id)) {
     heart.classList.add('fav');
     heart.textContent = '🤎';
+  } else {
+    heart.classList.remove('fav');
+    heart.textContent = '🤍';
   }
 
+  // Ajoute l'écouteur pour clic sur le cœur
   heart.addEventListener('click', () => {
-    heart.classList.toggle('fav');
-    const isFav = heart.classList.contains('fav');
+    const isFav = heart.classList.toggle('fav');
     heart.textContent = isFav ? '🤎' : '🤍';
 
-    // Mise à jour de la liste des favoris
     if (isFav) {
       if (!favoris.includes(id)) favoris.push(id);
     } else {
       favoris = favoris.filter(favId => favId !== id);
     }
 
-    // Sauvegarde dans localStorage
+    // Sauvegarde les nouveaux favoris
     localStorage.setItem('favoris', JSON.stringify(favoris));
   });
 });
