@@ -214,21 +214,20 @@ function filterRecipes() {
   const input = document.getElementById("searchInput").value
     .toLowerCase()
     .trim()
-    .replace(/\u00A0|\u202F/g, " "); // Nettoyage des espaces spéciaux
+    .replace(/\u00A0|\u202F/g, " "); // Nettoyage
 
   const recipes = document.querySelectorAll("#recipeList .recette-item");
 
   recipes.forEach(recipe => {
-    const text = recipe.textContent.toLowerCase();
+    const title = recipe.querySelector(".recette-title")?.textContent.toLowerCase() || "";
     const heart = recipe.querySelector(".heart");
 
-    const matchesSearch = text.includes(input);
+    const matchesSearch = title.includes(input);
     const matchesFavorite = !filterOn || heart.classList.contains("fav");
 
     recipe.style.display = matchesSearch && matchesFavorite ? "" : "none";
   });
 }
-
     
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
