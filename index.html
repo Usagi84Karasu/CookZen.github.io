@@ -156,7 +156,9 @@
 <div id="recipeList">
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍞 Pain sans gluten
+<div class="recette-title">
+  <span class="emoji">🍞</span>Pain sans gluten
+</div>
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
@@ -174,7 +176,9 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍕 Pâte à pizza sans gluten
+<div class="recette-title">
+  <span class="emoji">🍕</span>Pâte à pizza sans gluten
+</div>
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -191,7 +195,9 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍪 Cookies sans gluten
+<div class="recette-title">
+  <span class="emoji">🍪</span>Cookies sans gluten
+</div>
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -214,8 +220,8 @@ function filterRecipes() {
   const input = document.getElementById("searchInput").value
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")  // accents
-    .replace(/\u00A0|\u202F/g, " ")   // espaces insécables
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\u00A0|\u202F/g, " ")
     .trim();
 
   const recipes = document.querySelectorAll("#recipeList .recette-item");
@@ -224,21 +230,21 @@ function filterRecipes() {
     const heart = recipe.querySelector(".heart");
     const titleEl = recipe.querySelector(".recette-title");
 
-    // On enlève l'emoji (en supposant qu'il est au début)
-    let titleText = titleEl?.textContent || "";
-    titleText = titleText.replace(/^[^\p{L}\p{N}]+/gu, ""); // enlève les emojis ou symboles
-
-    // Normalisation
-    const titleNorm = titleText.toLowerCase()
+    // Récupère le texte sans l'emoji
+    let titleText = [...titleEl.childNodes]
+      .filter(n => n.nodeType === Node.TEXT_NODE)
+      .map(n => n.textContent)
+      .join(" ")
+      .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/\u00A0|\u202F/g, " ")
       .trim();
 
-    const matchesSearch = titleNorm.includes(input);
+    const matchesSearch = titleText.split(/\s+/).some(word => word.startsWith(input));
     const matchesFavorite = !filterOn || heart.classList.contains("fav");
 
-    recipe.style.display = matchesSearch && matchesFavorite ? "" : "none";
+    recipe.style.display = (matchesSearch && matchesFavorite) ? "" : "none";
   });
 }
 
