@@ -329,6 +329,80 @@ filterBtn.addEventListener('click', () => {
     });
   }
 });
+
+    function applyLanguage(lang) {
+  const translations = {
+    fr: {
+      title: "CookZen",
+      searchPlaceholder: "Rechercher une recette...",
+      filterBtn: "Afficher les Favoris",
+      favorisBtnAlt: "Afficher tout",
+      chooseLang: "Choisissez votre langue",
+      validate: "Valider",
+      recipes: {
+        pain: "🍞 Pain sans gluten",
+        pizza: "🍕 Pâte à pizza sans gluten",
+        cookies: "🍪 Cookies sans gluten"
+      },
+      steps: "Voir les étapes",
+      voir: "Voir"
+    },
+    en: {
+      title: "CookZen",
+      searchPlaceholder: "Search a recipe...",
+      filterBtn: "Show Favorites",
+      favorisBtnAlt: "Show All",
+      chooseLang: "Choose your language",
+      validate: "Validate",
+      recipes: {
+        pain: "🍞 Gluten-Free Bread",
+        pizza: "🍕 Gluten-Free Pizza Dough",
+        cookies: "🍪 Gluten-Free Cookies"
+      },
+      steps: "View Steps",
+      voir: "View"
+    },
+    es: {
+      title: "CookZen",
+      searchPlaceholder: "Buscar una receta...",
+      filterBtn: "Mostrar Favoritos",
+      favorisBtnAlt: "Mostrar Todo",
+      chooseLang: "Elige tu idioma",
+      validate: "Validar",
+      recipes: {
+        pain: "🍞 Pan sin gluten",
+        pizza: "🍕 Masa de pizza sin gluten",
+        cookies: "🍪 Galletas sin gluten"
+      },
+      steps: "Ver pasos",
+      voir: "Ver"
+    }
+  };
+
+  const t = translations[lang];
+
+  // Appliquer les traductions aux éléments
+  document.querySelector('.cookzen-title').textContent = t.title;
+  document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+  document.getElementById('filter-btn').textContent = filterOn ? t.favorisBtnAlt : t.filterBtn;
+  document.querySelector('#language-modal h2').textContent = t.chooseLang;
+  document.querySelector('#language-modal button').textContent = t.validate;
+
+  // Recettes
+  document.querySelectorAll('.recette-item').forEach(item => {
+    const id = item.getAttribute('data-id');
+    const titleEl = item.querySelector('.recette-title');
+    const voirBtn = item.querySelector('.voir-btn');
+    const etapeBtn = item.querySelector('.etape-btn');
+
+    if (titleEl && t.recipes[id]) {
+      titleEl.childNodes[0].textContent = t.recipes[id] + " ";
+    }
+    if (voirBtn) voirBtn.textContent = t.voir;
+    if (etapeBtn) etapeBtn.textContent = t.steps;
+  });
+}
+
 </script>
   
 </body>
