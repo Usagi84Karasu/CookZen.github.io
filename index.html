@@ -303,16 +303,38 @@ function filterRecipes() {
       });
     }
 
-    const hearts = document.querySelectorAll('.heart');
-    let filterOn = false;
-    const filterBtn = document.getElementById('filter-btn');
+let filterOn = false;
+const filterBtn = document.getElementById('filter-btn');
 
-    hearts.forEach(heart => {
-      heart.addEventListener('click', () => {
-        heart.classList.toggle('fav');
-        heart.textContent = heart.classList.contains('fav') ? '🤎' : '🤍';
-      });
-    });
+// Récupère les favoris depuis localStorage
+let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+// Applique l'état des favoris au chargement
+document.querySelectorAll('.recette-item').forEach(item => {
+  const id = item.getAttribute('data-id');
+  const heart = item.querySelector('.heart');
+
+  if (favoris.includes(id)) {
+    heart.classList.add('fav');
+    heart.textContent = '🤎';
+  }
+
+  heart.addEventListener('click', () => {
+    heart.classList.toggle('fav');
+    const isFav = heart.classList.contains('fav');
+    heart.textContent = isFav ? '🤎' : '🤍';
+
+    // Mise à jour de la liste des favoris
+    if (isFav) {
+      if (!favoris.includes(id)) favoris.push(id);
+    } else {
+      favoris = favoris.filter(favId => favId !== id);
+    }
+
+    // Sauvegarde dans localStorage
+    localStorage.setItem('favoris', JSON.stringify(favoris));
+  });
+});
 
     filterBtn.addEventListener('click', () => {
       filterOn = !filterOn;
