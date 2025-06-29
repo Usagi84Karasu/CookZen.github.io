@@ -250,7 +250,50 @@
   </div>
   </div>
 
+  <!-- Popup de sélection de langue -->
+<div id="language-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:white; padding:30px; border-radius:10px; text-align:center; max-width:300px;">
+    <h2>Choisissez votre langue</h2>
+    <select id="language-select">
+      <option value="fr">🇫🇷 Français</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="es">🇪🇸 Español</option>
+    </select>
+    <br><br>
+    <button onclick="saveLanguageChoice()">Valider</button>
+  </div>
+</div>
+
 <script>
+
+  // Fonction appelée au démarrage
+function checkLanguage() {
+  const lang = localStorage.getItem('language');
+  if (!lang) {
+    // Si aucune langue enregistrée, afficher le sélecteur
+    document.getElementById('language-modal').style.display = 'flex';
+  } else {
+    applyLanguage(lang);
+  }
+}
+
+// Fonction appelée au clic sur "Valider"
+function saveLanguageChoice() {
+  const lang = document.getElementById('language-select').value;
+  localStorage.setItem('language', lang);
+  document.getElementById('language-modal').style.display = 'none';
+  applyLanguage(lang);
+}
+
+// Fonction d'application de la langue (à personnaliser si besoin)
+function applyLanguage(lang) {
+  console.log("Langue choisie :", lang);
+  // Ici, tu peux ajouter du code pour traduire les textes plus tard
+}
+
+// Lancer la vérification au chargement de la page
+window.addEventListener('DOMContentLoaded', checkLanguage);
+
 function filterRecipes() {
   const input = document.getElementById("searchInput").value.toLowerCase();
   const recipes = document.querySelectorAll("#recipeList .recette-item");
