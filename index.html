@@ -150,11 +150,13 @@
   <div class="barre"></div>
 
   <div class="contenu">
+    <input type="text" id="searchInput" placeholder="Rechercher une recette..." onkeyup="filterRecipes()" style="margin: 20px; padding: 10px; width: 90%; border-radius: 10px; border: 1px solid #ccc;">
     <button id="filter-btn">Afficher les Favoris</button>
-
+    
+<div id="recipeList">
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍞 Pain sans gluten
+      <div class="recette-title recipe">🍞 Pain sans gluten
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
       </div>
       <div id="pain" class="recette-content">
@@ -172,7 +174,7 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍕 Pâte à pizza sans gluten
+      <div class="recette-title recipe">🍕 Pâte à pizza sans gluten
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -189,7 +191,7 @@
 
     <div class="recette-item">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍪 Cookies sans gluten
+      <div class="recette-title recipe">🍪 Cookies sans gluten
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -204,8 +206,20 @@
       </div>
     </div>
   </div>
+  </div>
 
   <script>
+
+function filterRecipes() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const recipes = document.querySelectorAll("#recipeList .recipe");
+
+  recipes.forEach(recipe => {
+    const text = recipe.textContent.toLowerCase();
+    recipe.style.display = text.includes(input) ? "" : "none";
+  });
+}
+    
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
     const AUTH_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify`;
