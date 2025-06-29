@@ -218,24 +218,21 @@ function filterRecipes() {
     .replace(/\u00A0|\u202F/g, " ")
     .trim();
 
-  const recipes = document.querySelectorAll("#recipeList .recette-item");
+  console.log("🔍 input:", input);
 
-  recipes.forEach(recipe => {
+  document.querySelectorAll("#recipeList .recette-item").forEach(recipe => {
     const heart = recipe.querySelector(".heart");
-    const titleEl = recipe.querySelector(".recette-title");
-
-    // Récupère le texte sans l'emoji
-    let titleText = [...titleEl.childNodes]
-      .filter(n => n.nodeType === Node.TEXT_NODE)
-      .map(n => n.textContent)
-      .join(" ")
-      .toLowerCase()
+    let titleText = recipe.querySelector(".recette-title")?.textContent || "";
+    titleText = titleText.replace(/^[^\p{L}\p{N}]+/gu, "");
+    const titleNorm = titleText.toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/\u00A0|\u202F/g, " ")
       .trim();
 
-    const matchesSearch = titleText.split(/\s+/).some(word => word.startsWith(input));
+    console.log("➡️ titleNorm:", titleNorm);
+
+    const matchesSearch = titleNorm.split(/\s+/).some(word => word.startsWith(input));
     const matchesFavorite = !filterOn || heart.classList.contains("fav");
 
     recipe.style.display = (matchesSearch && matchesFavorite) ? "" : "none";
