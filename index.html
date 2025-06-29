@@ -154,7 +154,7 @@
     <button id="filter-btn">Afficher les Favoris</button>
     
 <div id="recipeList">
-    <div class="recette-item recipe">
+    <div class="recette-item">
       <span class="heart">🤍</span>
       <div class="recette-title">🍞 Pain sans gluten
         <button class="voir-btn" onclick="afficheRecette('pain')">Voir la recette</button>
@@ -173,8 +173,8 @@
     </div>
 
     <div class="recette-item">
-      <span class="heart recipe">🤍</span>
-      <div class="recette-title recipe">🍕 Pâte à pizza sans gluten
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍕 Pâte à pizza sans gluten
         <button class="voir-btn" onclick="afficheRecette('pizza')">Voir la recette</button>
       </div>
       <div id="pizza" class="recette-content">
@@ -190,8 +190,8 @@
     </div>
 
     <div class="recette-item">
-      <span class="heart recipe">🤍</span>
-      <div class="recette-title recipe">🍪 Cookies sans gluten
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍪 Cookies sans gluten
         <button class="voir-btn" onclick="afficheRecette('cookie')">Voir la recette</button>
       </div>
       <div id="cookie" class="recette-content">
@@ -212,7 +212,7 @@
 
 function filterRecipes() {
   const input = document.getElementById("searchInput").value.toLowerCase();
-  const recipes = document.querySelectorAll("#recipeList .recipe");
+  const recipes = document.querySelectorAll("#recipeList .recette-item");
 
   recipes.forEach(recipe => {
     const text = recipe.textContent.toLowerCase();
