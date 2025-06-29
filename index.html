@@ -216,7 +216,12 @@ function filterRecipes() {
 
   recipes.forEach(recipe => {
     const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
-    recipe.style.display = title.includes(input) ? "" : "none";
+    const isFavorite = recipe.querySelector('.heart').classList.contains('fav');
+
+    const matchesSearch = title.includes(input);
+    const shouldBeVisible = matchesSearch && (!filterOn || isFavorite);
+
+    recipe.style.display = shouldBeVisible ? "" : "none";
   });
 }
     
