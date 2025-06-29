@@ -210,19 +210,25 @@
 
   <script>
 
-  function filterRecipes() {
-    const input = document.getElementById("searchInput").value
-      .toLowerCase()
-      .trim()
-      .replace(/\u00A0|\u202F/g, " "); // remplace les espaces insécables
+function filterRecipes() {
+  const input = document.getElementById("searchInput").value
+    .toLowerCase()
+    .trim()
+    .replace(/\u00A0|\u202F/g, " "); // Nettoyage des espaces spéciaux
 
-    const recipes = document.querySelectorAll("#recipeList .recette-item");
+  const recipes = document.querySelectorAll("#recipeList .recette-item");
 
-    recipes.forEach(recipe => {
-      const text = recipe.textContent.toLowerCase();
-      recipe.style.display = text.includes(input) ? "" : "none";
-    });
-  }
+  recipes.forEach(recipe => {
+    const text = recipe.textContent.toLowerCase();
+    const heart = recipe.querySelector(".heart");
+
+    const matchesSearch = text.includes(input);
+    const matchesFavorite = !filterOn || heart.classList.contains("fav");
+
+    recipe.style.display = matchesSearch && matchesFavorite ? "" : "none";
+  });
+}
+
     
     const CLIENT_ID = '1387928652041162892';
     const REDIRECT_URI = 'https://usagi84karasu.github.io/CookZen.github.io/';
@@ -271,24 +277,12 @@
       });
     });
 
-    filterBtn.addEventListener('click', () => {
-      filterOn = !filterOn;
+filterBtn.addEventListener('click', () => {
+  filterOn = !filterOn;
+  filterBtn.textContent = filterOn ? "Afficher tout" : "Afficher les Favoris";
+  filterRecipes(); // relance la recherche + filtrage favoris
+});
 
-      if (filterOn) {
-        filterBtn.textContent = "Afficher tout";
-        document.querySelectorAll('.recette-item').forEach(item => {
-          const heart = item.querySelector('.heart');
-          if (!heart.classList.contains('fav')) {
-            item.style.display = 'none';
-          }
-        });
-      } else {
-        filterBtn.textContent = "Afficher les Favoris";
-        document.querySelectorAll('.recette-item').forEach(item => {
-          item.style.display = 'block';
-        });
-      }
-    });
   </script>
 </body>
 </html>
