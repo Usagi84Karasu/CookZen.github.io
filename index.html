@@ -138,6 +138,25 @@
   color: white;
 }
 
+    #lang-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: white;
+  color: #db3131;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 11;
+  transition: background 0.2s;
+}
+
+#lang-btn:hover {
+  background: #f1f1f1;
+}
+
   </style>
 </head>
 <body>
@@ -146,6 +165,7 @@
   <div class="cookzen-title">CookZen</div>
 </div>
 
+  <button id="lang-btn" onclick="openLanguageModal()">🈯️</button>
 
   <div class="barre"></div>
 
@@ -401,6 +421,10 @@ filterBtn.addEventListener('click', () => {
     if (voirBtn) voirBtn.textContent = t.voir;
     if (etapeBtn) etapeBtn.textContent = t.steps;
   });
+}
+
+  function openLanguageModal() {
+  document.getElementById('language-modal').style.display = 'flex';
 }
 
 </script>
