@@ -481,89 +481,89 @@
   </div>
 
 <script>
-  // Fonction pour basculer la classe 'fav' et sauvegarder dans localStorage
-  function toggleFavorite(heart, recetteId) {
-    heart.classList.toggle('fav');
-    if (heart.classList.contains('fav')) {
-      localStorage.setItem('fav_' + recetteId, 'true');
-      heart.textContent = '❤️';
-    } else {
-      localStorage.removeItem('fav_' + recetteId);
-      heart.textContent = '🤍';
-    }
-  }
+function filterRecipes() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const recipes = document.querySelectorAll("#recipeList .recette-item");
 
-  // Au chargement de la page, on restaure l'état des favoris
-  document.querySelectorAll('.recette-item').forEach(item => {
-    const recetteId = item.getAttribute('data-id');
-    const heart = item.querySelector('.heart');
+  recipes.forEach(recipe => {
+    const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
+    const isFavorite = recipe.querySelector('.heart').classList.contains('fav');
 
-    // Restaure l'état favori depuis localStorage
-    if (localStorage.getItem('fav_' + recetteId) === 'true') {
-      heart.classList.add('fav');
-      heart.textContent = '❤️';
-    } else {
-      heart.classList.remove('fav');
-      heart.textContent = '🤍';
-    }
+    const matchesSearch = title.includes(input);
+    const shouldBeVisible = matchesSearch && (!filterOn || isFavorite);
 
-    // Ajoute l'écouteur sur chaque cœur
-    heart.addEventListener('click', () => {
-      toggleFavorite(heart, recetteId);
-    });
+    recipe.style.display = shouldBeVisible ? "" : "none";
   });
+}
 
-  // Filtre des recettes au clavier
-  function filterRecipes() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    document.querySelectorAll('.recette-item').forEach(item => {
-      const title = item.querySelector('.recette-title').textContent.toLowerCase();
-      if (title.includes(input)) {
-        item.style.display = '';
-      } else {
-        item.style.display = 'none';
-      }
-    });
-  }
-
-  // Fonction pour afficher/cacher la recette
-  function afficheRecette(id) {
-    const content = document.getElementById(id);
-    if (content.classList.contains('active')) {
-      content.classList.remove('active');
+function afficheRecette(id) {
+  document.querySelectorAll('.recette-content').forEach(el => {
+    if (el.id === id) {
+      el.classList.toggle('active');
     } else {
-      // Ferme toutes les autres recettes
-      document.querySelectorAll('.recette-content.active').forEach(c => c.classList.remove('active'));
-      content.classList.add('active');
+      el.classList.remove('active');
     }
-  }
+  });
+}
 
-  // Au chargement, active les favoris depuis localStorage
+let filterOn = false;
+const filterBtn = document.getElementById('filter-btn');
+
+// Récupère les favoris depuis localStorage (ou tableau vide)
+let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+// Applique les favoris enregistrés
 document.querySelectorAll('.recette-item').forEach(item => {
   const id = item.getAttribute('data-id');
   const heart = item.querySelector('.heart');
-  if (localStorage.getItem('fav_' + id) === 'true') {
+
+  if (favoris.includes(id)) {
     heart.classList.add('fav');
-    heart.textContent = '❤️'; // ou une autre icône favorite
+    heart.textContent = '🤎';
   } else {
     heart.classList.remove('fav');
     heart.textContent = '🤍';
   }
 
-  // Clique sur le cœur pour ajouter/enlever des favoris
   heart.addEventListener('click', () => {
-    if (heart.classList.contains('fav')) {
-      heart.classList.remove('fav');
-      heart.textContent = '🤍';
-      localStorage.setItem('fav_' + id, 'false');
+    const isFav = heart.classList.toggle('fav');
+    heart.textContent = isFav ? '🤎' : '🤍';
+
+    if (isFav) {
+      if (!favoris.includes(id)) favoris.push(id);
     } else {
-      heart.classList.add('fav');
-      heart.textContent = '❤️';
-      localStorage.setItem('fav_' + id, 'true');
+      favoris = favoris.filter(favId => favId !== id);
     }
+
+    localStorage.setItem('favoris', JSON.stringify(favoris));
   });
 });
 
+filterBtn.addEventListener('click', () => {
+  filterOn = !filterOn;
+
+  if (filterOn) {
+    filterBtn.textContent = "Afficher tout";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      const heart = item.querySelector('.heart');
+      if (!heart.classList.contains('fav')) {
+        item.style.display = 'none';
+      }
+    });
+  } else {
+    filterBtn.textContent = "Afficher les Favoris";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      item.style.display = 'block';
+    });
+  }
+});
+   } else {
+    filterBtn.textContent = "Afficher les Favoris";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      item.style.display = 'block';
+    });
+  }
+});
 </script>
   
 </body>
