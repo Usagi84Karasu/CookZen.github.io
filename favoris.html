@@ -590,6 +590,23 @@ filterBtn.addEventListener('click', () => {
     localStorage.setItem("favoris", JSON.stringify(favoris));
   }
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const favoris = JSON.parse(localStorage.getItem("favoris") || "[]");
+    const recettes = document.querySelectorAll(".recette-item");
+
+    recettes.forEach(item => {
+      const id = item.dataset.id;
+      const heart = item.querySelector(".heart");
+
+      // Si la recette n'est pas dans les favoris, on la cache
+      if (!favoris.includes(id)) {
+        item.style.display = "none";
+      } else {
+        heart.textContent = "❤️"; // Marque comme favori visuellement
+        heart.classList.add("fav");
+      }
+    });
+  });
 </script>
   
 </body>
