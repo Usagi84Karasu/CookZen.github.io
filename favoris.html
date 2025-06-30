@@ -2,99 +2,103 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mes Favoris - CookZen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookZen</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fdf5e6;
       margin: 0;
-      padding: 0;
+      font-family: sans-serif;
+      background: #f8f8f8;
     }
-
-    header {
-      background-color: #ffcc99;
-      padding: 15px;
-      text-align: center;
-    }
-
-    nav {
-      background-color: #ffa07a;
+    .footer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #db3131;
+      color: white;
       display: flex;
       justify-content: center;
-      padding: 10px;
+      align-items: center;
+      font-size: 32px;
+      z-index: 10;
     }
-
-    nav a {
-      text-decoration: none;
-      color: white;
-      margin: 0 10px;
-      font-weight: bold;
+    .barre {
+      position: fixed;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
     }
-
-    h1 {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .favorites-container {
-      max-width: 600px;
-      margin: 30px auto;
+    .contenu {
+      margin-top: 140px;
       padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+    .cookzen-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
     }
 
-    .favorite-item {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-    }
+    .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 20;
+}
 
-    .favorite-item:last-child {
-      border-bottom: none;
-    }
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #db3131;
+}
 
-    .empty {
-      text-align: center;
-      color: gray;
-      font-style: italic;
-    }
+.nav-btn:focus {
+  outline: none;
+}
+
+body {
+  padding-bottom: 70px; /* pour éviter que le contenu passe derrière la nav */
+}
+
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Mes Favoris</h1>
-  </header>
-
-  <nav>
-    <a href="index.html">🏠 Accueil</a>
-    <a href="favoris.html">❤️ Favoris</a>
-    <a href="parametres.html">⚙️</button>
-  </nav>
-
-  <div class="favorites-container" id="favorites-container">
-    <p class="empty">Aucun favori pour le moment.</p>
+  <div class="footer">
+    <div class="cookzen-title">CookZen</div>
   </div>
-
+  <div class="bottom-nav">
+  <a class="nav-btn" href="index.html">🏠</a>
+  <a class="nav-btn" href="favoris.html">❤️</a>
+  <a class="nav-btn" href="parametres.html">⚙️</a>
+</div>
+  <div class="barre"></div>
   <script>
-    // Charger les favoris depuis le localStorage
-    const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
 
-    const container = document.getElementById("favorites-container");
-    container.innerHTML = ""; // Nettoyer le contenu précédent
-
-    if (favoris.length === 0) {
-      container.innerHTML = "<p class='empty'>Aucun favori pour le moment.</p>";
-    } else {
-      favoris.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "favorite-item";
-        div.textContent = item.nom; // suppose que chaque favori a un champ "nom"
-        container.appendChild(div);
-      });
-    }
-  </script>
-
+    <script>
+  document.querySelectorAll(".nav-btn").forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      alert("Onglet " + index + " cliqué !");
+      // Tu peux ici faire un scroll vers une section, ou changer de page
+    });
+  });
+</script>
+  
 </body>
 </html>
