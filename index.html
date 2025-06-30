@@ -11,6 +11,32 @@
       background: #f8f8f8;
     }
 
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 20;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #db3131;
+}
+
+.nav-btn:focus {
+  outline: none;
+}
+    
     .footer {
       position: fixed;
       top: 0; left: 0;
@@ -166,7 +192,14 @@
 </div>
 
   <div class="barre"></div>
+<div class="bottom-nav">
+  <button class="nav-btn">🏠</button>
+  <button class="nav-btn">🔍</button>
+  <button class="nav-btn">❤️</button>
+  <button class="nav-btn">⚙️</button>
+</div>
 
+  
   <div class="contenu">
    <input type="text" id="searchInput" class="search-input" placeholder="Rechercher une recette..." onkeyup="filterRecipes()">
 
