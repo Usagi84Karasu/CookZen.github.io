@@ -579,7 +579,83 @@
       }
     });
   }
+
+  const hearts = document.querySelectorAll('.heart');
+  const filterFavBtn = document.getElementById('filtrerFavorisBtn');
+
+  let favoris = JSON.parse(localStorage.getItem('cookzenFavoris')) || [];
+
+  // Fonction pour mettre à jour l'affichage de tous les cœurs d'une recette donnée
+  function updateHeartsForId(id, isFav) {
+    hearts.forEach(heart => {
+      const heartId = heart.parentElement.getAttribute('data-id');
+      if (heartId === id) {
+        if (isFav) {
+          heart.textContent = '❤️';
+          heart.classList.add('fav');
+        } else {
+          heart.textContent = '🤍';
+          heart.classList.remove('fav');
+        }
+      }
+    });
+  }
+
+  // Initialisation des cœurs selon favoris
+  hearts.forEach(heart => {
+    const id = heart.parentElement.getAttribute('data-id');
+    if (favoris.includes(id)) {
+      updateHeartsForId(id, true);
+    } else {
+      updateHeartsForId(id, false);
+    }
+
+    // Gestion du clic
+    heart.addEventListener('click', () => {
+      if (favoris.includes(id)) {
+        // Retirer des favoris
+        favoris = favoris.filter(favId => favId !== id);
+        updateHeartsForId(id, false);
+      } else {
+        // Ajouter aux favoris
+        favoris.push(id);
+        updateHeartsForId(id, true);
+      }
+      localStorage.setItem('cookzenFavoris', JSON.stringify(favoris));
+    });
+  });
+
+  let filtreActif = false;
+  filterFavBtn.addEventListener('click', () => {
+    filtreActif = !filtreActif;
+    filterFavBtn.classList.toggle('active', filtreActif);
+
+    const recettes = document.querySelectorAll('.recette-item');
+    recettes.forEach(recette => {
+      const id = recette.getAttribute('data-id');
+      if (filtreActif) {
+        recette.style.display = favoris.includes(id) ? '' : 'none';
+      } else {
+        recette.style.display = '';
+      }
+    });
+  });
+
+  // Fonction de recherche combinée
+  function filterRecipes() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const recettes = document.querySelectorAll('.recette-item');
+
+    recettes.forEach(recette => {
+      const title = recette.querySelector('.recette-title').textContent.toLowerCase();
+      const id = recette.getAttribute('data-id');
+      const matchRecherche = title.includes(input);
+      const matchFavori = !filtreActif || favoris.includes(id);
+
+      recette.style.display = (matchRecherche && matchFavori) ? '' : 'none';
+    });
+  }
 </script>
-  
+
 </body>
 </html>
