@@ -571,6 +571,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+  // Ajouter cet écouteur uniquement si on est sur favoris.html
+  if (window.location.pathname.includes("favoris.html")) {
+    document.addEventListener("DOMContentLoaded", () => {
+      const recettes = document.querySelectorAll(".recette-item");
+      recettes.forEach(item => {
+        const heart = item.querySelector(".heart");
+        if (!heart.classList.contains("fav")) {
+          item.style.display = "none"; // Masquer si pas en favoris
+        }
+      });
+    });
+  }
+
+  // Gérer le clic sur les cœurs (à mettre sur toutes les pages)
+  document.querySelectorAll(".heart").forEach(heart => {
+    heart.addEventListener("click", () => {
+      heart.classList.toggle("fav");
+      heart.textContent = heart.classList.contains("fav") ? "❤️" : "🤍";
+
+      // Stockage local pour conserver les favoris
+      const id = heart.closest(".recette-item").dataset.id;
+      let favs = JSON.parse(localStorage.getItem("favs") || "[]");
+
+      if (heart.classList.contains("fav")) {
+        if (!favs.includes(id)) favs.push(id);
+      } else {
+        favs = favs.filter(f => f !== id);
+      }
+
+      localStorage.setItem("favs", JSON.stringify(favs));
+    });
+
+    // Initialiser depuis localStorage
+    const id = heart.closest(".recette-item").dataset.id;
+    let favs = JSON.parse(localStorage.getItem("favs") || "[]");
+    if (favs.includes(id)) {
+      heart.classList.add("fav");
+      heart.textContent = "❤️";
+    }
+  });
 </script>
   
 </body>
