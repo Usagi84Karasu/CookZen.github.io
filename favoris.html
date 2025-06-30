@@ -626,6 +626,41 @@ function afficheRecette(id) {
 // Chargement initial
 loadFavorites();
 afficherFavorisSeulement(); // Masque les non-favoris
+
+    <script>
+  // Récupère tous les cœurs
+  const hearts = document.querySelectorAll('.heart');
+
+  // Clique sur un cœur pour l'ajouter ou retirer des favoris
+  hearts.forEach((heart, index) => {
+    const id = heart.closest('.recette-item').dataset.id;
+
+    // Appliquer le style fav si déjà en favoris
+    if (localStorage.getItem(`fav-${id}`) === 'true') {
+      heart.classList.add('fav');
+      heart.textContent = '❤️';
+    }
+
+    // Gestion du clic pour ajouter/enlever des favoris
+    heart.addEventListener('click', () => {
+      heart.classList.toggle('fav');
+      const isFav = heart.classList.contains('fav');
+      heart.textContent = isFav ? '❤️' : '🤍';
+      localStorage.setItem(`fav-${id}`, isFav);
+    });
+  });
+
+  // Si on est sur la page favoris.html : filtrer
+  if (window.location.pathname.includes('favoris.html')) {
+    document.querySelectorAll('.recette-item').forEach(item => {
+      const id = item.dataset.id;
+      if (localStorage.getItem(`fav-${id}`) !== 'true') {
+        item.style.display = 'none';
+      }
+    });
+  }
+</script>
+
 </script>
   
 </body>
