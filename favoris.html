@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes Favoris - CookZen</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf5e6;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #ffcc99;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #ffa07a;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .favorites-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .favorite-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .favorite-item:last-child {
+      border-bottom: none;
+    }
+
+    .empty {
+      text-align: center;
+      color: gray;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Mes Favoris</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">🏠 Accueil</a>
+    <a href="favoris.html">❤️ Favoris</a>
+    <a href="parametres.html">⚙️</button>
+  </nav>
+
+  <div class="favorites-container" id="favorites-container">
+    <p class="empty">Aucun favori pour le moment.</p>
+  </div>
+
+  <script>
+    // Charger les favoris depuis le localStorage
+    const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+
+    const container = document.getElementById("favorites-container");
+    container.innerHTML = ""; // Nettoyer le contenu précédent
+
+    if (favoris.length === 0) {
+      container.innerHTML = "<p class='empty'>Aucun favori pour le moment.</p>";
+    } else {
+      favoris.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "favorite-item";
+        div.textContent = item.nom; // suppose que chaque favori a un champ "nom"
+        container.appendChild(div);
+      });
+    }
+  </script>
+
+</body>
+</html>
