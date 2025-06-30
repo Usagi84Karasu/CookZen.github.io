@@ -570,6 +570,46 @@ filterBtn.addEventListener('click', () => {
     favoris.push(recetteId);
     heartElement.classList.add('fav');
   }
+
+// Sauvegarde des favoris
+document.addEventListener("DOMContentLoaded", () => {
+  const hearts = document.querySelectorAll(".heart");
+
+  // Charger les favoris depuis localStorage
+  let favoris = JSON.parse(localStorage.getItem("cookzenFavoris")) || [];
+
+  // Appliquer les favoris
+  hearts.forEach(heart => {
+    const recetteId = heart.closest(".recette-item").dataset.id;
+    if (favoris.includes(recetteId)) {
+      heart.textContent = "❤️";
+      heart.classList.add("fav");
+    }
+
+    heart.addEventListener("click", () => {
+      if (favoris.includes(recetteId)) {
+        favoris = favoris.filter(id => id !== recetteId);
+        heart.textContent = "🤍";
+        heart.classList.remove("fav");
+      } else {
+        favoris.push(recetteId);
+        heart.textContent = "❤️";
+        heart.classList.add("fav");
+      }
+
+      localStorage.setItem("cookzenFavoris", JSON.stringify(favoris));
+    });
+  });
+});
+
+// Fonction Voir recette (déjà utilisée dans tes boutons)
+function afficheRecette(id) {
+  const content = document.getElementById(id);
+  content.classList.toggle("active");
+}
+
+// Supprime les alertes ou notifications visuelles si présentes
+// (Tu n'en as pas dans ton code HTML, donc probablement dans un JS externe. Si tu veux, je peux inspecter le JS si tu me l'envoies.)
 </script>
   
 </body>
