@@ -2,67 +2,50 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Choisissez votre langue</title>
   <style>
     body {
-      margin: 0;
       font-family: sans-serif;
-      background: #f8f8f8;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
+      background: #f8f8f8;
     }
-
-    .langue-container {
-      text-align: center;
-    }
-
     h1 {
       margin-bottom: 30px;
-      color: #db3131;
-      font-size: 32px;
     }
-
-    .langue-btn {
+    .lang-button {
+      padding: 12px 24px;
       margin: 10px;
-      padding: 20px 30px;
       font-size: 18px;
-      border: none;
-      border-radius: 10px;
       cursor: pointer;
-      background-color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-    }
-
-    .langue-btn:hover {
-      transform: scale(1.05);
+      border: none;
+      border-radius: 8px;
+      background-color: #db3131;
+      color: white;
     }
   </style>
 </head>
 <body>
-
-  <div class="langue-container">
-    <h1>Choisissez votre langue</h1>
-    <button class="langue-btn" onclick="setLang('fr')">🇫🇷 Français</button>
-    <button class="langue-btn" onclick="setLang('en')">🇬🇧 English</button>
-    <button class="langue-btn" onclick="setLang('es')">🇪🇸 Español</button>
-  </div>
+  <h1>Choisissez votre langue</h1>
+  <button class="lang-button" onclick="setLang('fr')">🇫🇷 Français</button>
+  <button class="lang-button" onclick="setLang('en')">🇬🇧 English</button>
+  <button class="lang-button" onclick="setLang('es')">🇪🇸 Español</button>
 
   <script>
+    // Redirige automatiquement si une langue est enregistrée
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+      window.location.href = `index_${savedLang === 'fr' ? '' : savedLang}.html`;
+    }
+
     function setLang(lang) {
-      localStorage.setItem('language', lang);
-      if (lang === 'fr') {
-        window.location.href = 'index_fr.html';
-      } else if (lang === 'en') {
-        window.location.href = 'index_en.html';
-      } else if (lang === 'es') {
-        window.location.href = 'index_es.html';
-      }
+      localStorage.setItem('lang', lang);
+      const file = lang === 'fr' ? 'index.html' : `index_${lang}.html`;
+      window.location.href = file;
     }
   </script>
-
 </body>
 </html>
