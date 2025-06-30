@@ -557,7 +557,54 @@ filterBtn.addEventListener('click', () => {
     });
   }
 });
- 
+
+  <script>
+  // Affiche/masque une recette
+  function afficheRecette(id) {
+    const content = document.getElementById(id);
+    content.classList.toggle("active");
+  }
+
+  // Gère les favoris dans le localStorage
+  function toggleFavori(id, element) {
+    let favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+    if (favoris.includes(id)) {
+      favoris = favoris.filter(item => item !== id);
+      element.textContent = "🤍";
+      element.classList.remove("fav");
+    } else {
+      favoris.push(id);
+      element.textContent = "❤️";
+      element.classList.add("fav");
+    }
+    localStorage.setItem("favoris", JSON.stringify(favoris));
+  }
+
+  // Applique l'état des favoris au chargement
+  document.addEventListener("DOMContentLoaded", () => {
+    const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+    document.querySelectorAll(".recette-item").forEach(item => {
+      const id = item.dataset.id;
+      const heart = item.querySelector(".heart");
+      if (favoris.includes(id)) {
+        heart.textContent = "❤️";
+        heart.classList.add("fav");
+      }
+      heart.addEventListener("click", () => toggleFavori(id, heart));
+    });
+  });
+
+  // Recherche dynamique
+  function filterRecipes() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const recipes = document.querySelectorAll(".recette-item");
+    recipes.forEach(recipe => {
+      const title = recipe.querySelector(".recette-title").textContent.toLowerCase();
+      recipe.style.display = title.includes(input) ? "" : "none";
+    });
+  }
+</script>
+
 </script>
   
 </body>
