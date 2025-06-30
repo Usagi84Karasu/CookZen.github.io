@@ -1,73 +1,172 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Paramètres</title>
-  <style>
-    body {
-      background-color: #f8f8f8; /* gris clair */
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      color: #333;
-      font-size: 18px; /* Texte général plus grand */
-      line-height: 1.5;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paramètres - Changer le thème</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    h1 {
-      margin-bottom: 25px;
-      font-size: 28px; /* Titre plus grand */
-    }
+  /* Reset et base */
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+  }
 
-    label {
-      font-weight: bold;
-      margin-right: 15px;
-      font-size: 20px; /* Label plus visible */
-    }
+  body {
+    background: linear-gradient(135deg, #2e3440, #3b4252);
+    color: #d8dee9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
 
-    select {
-      padding: 10px 15px;
-      font-size: 18px; /* Sélecteur plus grand */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      min-width: 180px;
-    }
+  .settings-container {
+    background: linear-gradient(145deg, #434c5e, #3b4252);
+    border-radius: 16px;
+    box-shadow:  8px 8px 16px #2b3446,
+                 -8px -8px 16px #4e5b73;
+    width: 400px;
+    padding: 2.5rem 3rem;
+    backdrop-filter: saturate(180%) blur(10px);
+  }
 
-    .info {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #666;
-      max-width: 400px;
-    }
-  </style>
+  .settings-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: #eceff4;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  }
+
+  .option {
+    background: linear-gradient(145deg, #3a4254, #4b566b);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.8rem;
+    box-shadow: inset 4px 4px 6px #2f3545,
+                inset -4px -4px 6px #545f7a;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .option:hover {
+    background: linear-gradient(145deg, #4b566b, #5a657a);
+    box-shadow: inset 6px 6px 10px #29303f,
+                inset -6px -6px 10px #626f8a;
+  }
+
+  .option label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #d8dee9;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #627d98;
+    border-radius: 26px;
+    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2),
+                inset -2px -2px 5px rgba(0,0,0,0.4);
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: linear-gradient(145deg, #eceff4, #d8dee9);
+    border-radius: 50%;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: #88c0d0;
+    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.6),
+                inset -2px -2px 5px rgba(0,0,0,0.3);
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(22px);
+    background: linear-gradient(145deg, #81a1c1, #5e81ac);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* Texture légère sur fond */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px),
+      radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-position: 0 0, 25px 25px;
+    background-size: 50px 50px;
+    z-index: 0;
+  }
+</style>
 </head>
 <body>
-  <h1>Paramètres</h1>
 
-  <div>
-    <label for="themeSelect">Choisir le thème :</label>
-    <select id="themeSelect">
-      <option value="original">Original</option>
-      <option value="rouge">Rouge</option>
-      <option value="orange">Orange</option>
-      <option value="bleu">Bleu</option>
-      <option value="violet">Violet</option>
-    </select>
+<div class="settings-container" role="region" aria-label="Paramètres de thème">
+  <h1>Paramètres du thème</h1>
+
+  <div class="option">
+    <label for="darkModeToggle">
+      Mode sombre
+      <div class="switch">
+        <input type="checkbox" id="darkModeToggle" />
+        <span class="slider"></span>
+      </div>
+    </label>
   </div>
 
-  <p class="info">Le thème choisi sera appliqué sur la page d'accueil et la page favoris.</p>
+  <div class="option">
+    <label for="blueAccentToggle">
+      Accent bleu
+      <div class="switch">
+        <input type="checkbox" id="blueAccentToggle" />
+        <span class="slider"></span>
+      </div>
+    </label>
+  </div>
 
-  <script>
-    const themeSelect = document.getElementById('themeSelect');
+  <div class="option">
+    <label for="textureToggle">
+      Texture de fond
+      <div class="switch">
+        <input type="checkbox" id="textureToggle" />
+        <span class="slider"></span>
+      </div>
+    </label>
+  </div>
+</div>
 
-    // Charger le thème sauvegardé ou mettre "original" par défaut
-    const savedTheme = localStorage.getItem('cookzenTheme') || 'original';
-    themeSelect.value = savedTheme;
-
-    // Écoute du changement de sélection
-    themeSelect.addEventListener('change', () => {
-      localStorage.setItem('cookzenTheme', themeSelect.value);
-      alert('Thème sauvegardé. Rechargez la page d\'accueil ou favoris pour voir le changement.');
-    });
-  </script>
 </body>
 </html>
