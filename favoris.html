@@ -11,6 +11,32 @@
       background: #f8f8f8;
     }
 
+    /* Thèmes */
+body.original {
+  background-color: #fff;
+  color: #333;
+}
+
+body.rouge {
+  background-color: #ffeded;
+  color: #a80000;
+}
+
+body.orange {
+  background-color: #fff4e5;
+  color: #b35b00;
+}
+
+body.bleu {
+  background-color: #e6f0ff;
+  color: #003d99;
+}
+
+body.violet {
+  background-color: #f0e6ff;
+  color: #4b0082;
+}
+    
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -529,6 +555,12 @@
     }
     localStorage.setItem("favoris", JSON.stringify(favoris));
   }
+
+  <script>
+  const theme = localStorage.getItem('cookzenTheme') || 'original';
+  document.body.classList.add(theme);
+</script>
+
 </script>
 
 </body>
