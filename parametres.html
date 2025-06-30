@@ -5,46 +5,62 @@
   <title>Paramètres</title>
   <style>
     body {
-      background-color: #f0f0f0; /* gris clair */
+      background-color: #f8f8f8; /* gris clair */
       font-family: Arial, sans-serif;
       padding: 20px;
+      color: #333;
     }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
     label {
       font-weight: bold;
       margin-right: 10px;
     }
+
     select {
-      padding: 5px;
+      padding: 8px 12px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .info {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 <body>
   <h1>Paramètres</h1>
-    <div class="bottom-nav">
-  <a class="nav-btn" href="index.html">🏠</a>
-  <a class="nav-btn" href="favoris.html">❤️</a>
-  <a class="nav-btn" href="parametres.html">⚙️</a>
-</div>
+
   <div>
     <label for="themeSelect">Choisir le thème :</label>
     <select id="themeSelect">
-      <option value="clair">Clair</option>
-      <option value="sombre">Sombre</option>
+      <option value="original">Original</option>
+      <option value="rouge">Rouge</option>
+      <option value="orange">Orange</option>
+      <option value="bleu">Bleu</option>
+      <option value="violet">Violet</option>
     </select>
   </div>
+
+  <p class="info">Le thème choisi sera appliqué sur la page d'accueil et la page favoris.</p>
 
   <script>
     const themeSelect = document.getElementById('themeSelect');
 
-    // Charger le thème sauvegardé
-    const savedTheme = localStorage.getItem('cookzenTheme') || 'clair';
+    // Charger le thème sauvegardé ou mettre "original" par défaut
+    const savedTheme = localStorage.getItem('cookzenTheme') || 'original';
     themeSelect.value = savedTheme;
 
-    // Sauvegarder le choix et prévenir l'utilisateur
+    // Écoute du changement de sélection
     themeSelect.addEventListener('change', () => {
       localStorage.setItem('cookzenTheme', themeSelect.value);
-      alert('Thème sauvegardé. Rechargez les autres pages pour appliquer le thème.');
+      alert('Thème sauvegardé. Rechargez la page d\'accueil ou favoris pour voir le changement.');
     });
   </script>
 </body>
