@@ -36,16 +36,16 @@
     }
 
     .contenu {
-  margin-top: 140px;
-  padding: 20px;
-  font-size: 18px;
-}
+      margin-top: 140px;
+      padding: 20px;
+      font-size: 18px;
+    }
 
-@media (max-width: 480px) {
-  .contenu {
-    margin-top: 120px; /* réduit l'espace blanc sur petit écran */
-  }
-}
+    @media (max-width: 480px) {
+      .contenu {
+        margin-top: 120px;
+      }
+    }
 
     .recette-item {
       margin-bottom: 30px;
@@ -73,14 +73,14 @@
     }
 
     .search-input {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
 
     .recette-content {
       display: none;
@@ -130,32 +130,32 @@
     }
 
     .cookzen-title {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-  font-size: 48px; /* plus gros */
-  font-weight: bold;
-  color: white;
-}
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+    }
 
     #lang-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  background: white;
-  color: #db3131;
-  border: none;
-  border-radius: 5px;
-  font-size: 24px;
-  padding: 6px 10px;
-  cursor: pointer;
-  z-index: 11;
-  transition: background 0.2s;
-}
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: white;
+      color: #db3131;
+      border: none;
+      border-radius: 5px;
+      font-size: 24px;
+      padding: 6px 10px;
+      cursor: pointer;
+      z-index: 11;
+      transition: background 0.2s;
+    }
 
-#lang-btn:hover {
-  background: #f1f1f1;
-}
+    #lang-btn:hover {
+      background: #f1f1f1;
+    }
 
   </style>
 </head>
@@ -173,21 +173,22 @@
   <button id="filter-btn">Show Favorites</button>
 
   <div id="recipeList">
-    <div class="recette-item" data-id="pain">
+
+    <div class="recette-item" data-id="bread">
       <span class="heart">🤍</span>
       <div class="recette-title">🍞 Gluten-Free Bread
-        <button class="voir-btn" onclick="afficheRecette('pain')">View</button>
+        <button class="voir-btn" onclick="afficheRecette('bread')">View</button>
       </div>
-      <div id="pain" class="recette-content">
+      <div id="bread" class="recette-content">
         <ul>
-          <li>250g rice flour</li>
-          <li>100g cornstarch</li>
-          <li>1 packet of yeast</li>
-          <li>300ml warm water</li>
-          <li>1 tbsp olive oil</li>
+          <li>500 g gluten-free flour</li>
+          <li>1 packet dry baker's yeast</li>
+          <li>1 tbsp sugar</li>
           <li>1 tsp salt</li>
+          <li>3 tbsp olive oil</li>
+          <li>400 ml lukewarm water</li>
         </ul>
-        <a class="etape-btn" href="pain_en.html">View Steps</a>
+        <a class="etape-btn" href="bread_en.html">View steps</a>
       </div>
     </div>
 
@@ -198,13 +199,14 @@
       </div>
       <div id="pizza" class="recette-content">
         <ul>
-          <li>200g gluten-free flour</li>
-          <li>1/2 packet of yeast</li>
-          <li>120ml warm water</li>
-          <li>1 tbsp olive oil</li>
-          <li>Pinch of salt</li>
+          <li>250 g gluten-free flour</li>
+          <li>1 tsp salt</li>
+          <li>1 tsp sugar</li>
+          <li>1 packet dry baker's yeast</li>
+          <li>2 tbsp olive oil</li>
+          <li>180 ml lukewarm water</li>
         </ul>
-        <a class="etape-btn" href="pizza_en.html">View Steps</a>
+        <a class="etape-btn" href="pizza_en.html">View steps</a>
       </div>
     </div>
 
@@ -213,17 +215,20 @@
       <div class="recette-title">🍪 Gluten-Free Cookies
         <button class="voir-btn" onclick="afficheRecette('cookies')">View</button>
       </div>
-      <div id="cookie" class="recette-content">
+      <div id="cookies" class="recette-content">
         <ul>
-          <li>100g soft butter</li>
-          <li>100g sugar</li>
+          <li>120 g gluten-free flour</li>
+          <li>100 g brown sugar</li>
           <li>1 egg</li>
-          <li>150g almond flour</li>
-          <li>Chocolate chips</li>
+          <li>80 g softened butter</li>
+          <li>1/2 tsp gluten-free baking powder</li>
+          <li>1/2 tsp vanilla extract</li>
+          <li>100 g dark chocolate chips</li>
         </ul>
-        <a class="etape-btn" href="cookie_en.html">View Steps</a>
+        <a class="etape-btn" href="cookies_en.html">View steps</a>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -256,10 +261,8 @@ function afficheRecette(id) {
 let filterOn = false;
 const filterBtn = document.getElementById('filter-btn');
 
-// Récupère les favoris depuis localStorage (ou tableau vide)
 let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
 
-// Applique les favoris enregistrés
 document.querySelectorAll('.recette-item').forEach(item => {
   const id = item.getAttribute('data-id');
   const heart = item.querySelector('.heart');
@@ -290,7 +293,7 @@ filterBtn.addEventListener('click', () => {
   filterOn = !filterOn;
 
   if (filterOn) {
-    filterBtn.textContent = "Afficher tout";
+    filterBtn.textContent = "Show All";
     document.querySelectorAll('.recette-item').forEach(item => {
       const heart = item.querySelector('.heart');
       if (!heart.classList.contains('fav')) {
@@ -298,7 +301,7 @@ filterBtn.addEventListener('click', () => {
       }
     });
   } else {
-    filterBtn.textContent = "Afficher les Favoris";
+    filterBtn.textContent = "Show Favorites";
     document.querySelectorAll('.recette-item').forEach(item => {
       item.style.display = 'block';
     });
@@ -308,3 +311,4 @@ filterBtn.addEventListener('click', () => {
 
 </body>
 </html>
+
