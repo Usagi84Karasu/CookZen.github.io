@@ -612,6 +612,59 @@ document.addEventListener("DOMContentLoaded", () => {
       heart.textContent = "❤️";
     }
   });
+
+  // Permet de marquer les favoris en cliquant sur les cœurs
+document.querySelectorAll('.heart').forEach(heart => {
+  heart.addEventListener('click', () => {
+    heart.classList.toggle('fav');
+    heart.textContent = heart.classList.contains('fav') ? '❤️' : '🤍';
+    saveFavorites();
+  });
+});
+
+// Sauvegarde des favoris dans le localStorage
+function saveFavorites() {
+  const favorites = [];
+  document.querySelectorAll('.recette-item').forEach(item => {
+    const id = item.getAttribute('data-id');
+    const heart = item.querySelector('.heart');
+    if (heart.classList.contains('fav')) {
+      favorites.push(id);
+    }
+  });
+  localStorage.setItem('cookzen_favs', JSON.stringify(favorites));
+}
+
+// Chargement des favoris à l'ouverture
+function loadFavorites() {
+  const favs = JSON.parse(localStorage.getItem('cookzen_favs') || '[]');
+  document.querySelectorAll('.recette-item').forEach(item => {
+    const id = item.getAttribute('data-id');
+    const heart = item.querySelector('.heart');
+    if (favs.includes(id)) {
+      heart.classList.add('fav');
+      heart.textContent = '❤️';
+    }
+  });
+}
+
+// Fonction pour n'afficher que les recettes likées (avec cœur rouge)
+function afficherFavorisSeulement() {
+  document.querySelectorAll('.recette-item').forEach(item => {
+    const heart = item.querySelector('.heart');
+    item.style.display = heart.classList.contains('fav') ? 'block' : 'none';
+  });
+}
+
+// Affiche/masque le contenu d'une recette
+function afficheRecette(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('active');
+}
+
+// Chargement initial
+loadFavorites();
+afficherFavorisSeulement(); // Masque les non-favoris
 </script>
   
 </body>
