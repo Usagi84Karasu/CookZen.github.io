@@ -557,7 +557,39 @@ filterBtn.addEventListener('click', () => {
     });
   }
 });
- 
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+    document.querySelectorAll(".recette-item").forEach(item => {
+      const id = item.dataset.id;
+      if (!favoris.includes(id)) {
+        item.style.display = "none";
+      } else {
+        const heart = item.querySelector(".heart");
+        heart.textContent = "❤️";
+        heart.classList.add("fav");
+        heart.addEventListener("click", () => {
+          toggleFavori(id, heart);
+          item.style.display = "none"; // Retirer l'élément si décoché depuis favoris.html
+        });
+      }
+    });
+  });
+
+  function toggleFavori(id, element) {
+    let favoris = JSON.parse(localStorage.getItem("favoris")) || [];
+    if (favoris.includes(id)) {
+      favoris = favoris.filter(item => item !== id);
+      element.textContent = "🤍";
+      element.classList.remove("fav");
+    } else {
+      favoris.push(id);
+      element.textContent = "❤️";
+      element.classList.add("fav");
+    }
+    localStorage.setItem("favoris", JSON.stringify(favoris));
+  }
+
 </script>
   
 </body>
