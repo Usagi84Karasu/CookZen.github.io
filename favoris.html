@@ -537,6 +537,33 @@
       content.classList.add('active');
     }
   }
+
+  // Au chargement, active les favoris depuis localStorage
+document.querySelectorAll('.recette-item').forEach(item => {
+  const id = item.getAttribute('data-id');
+  const heart = item.querySelector('.heart');
+  if (localStorage.getItem('fav_' + id) === 'true') {
+    heart.classList.add('fav');
+    heart.textContent = '❤️'; // ou une autre icône favorite
+  } else {
+    heart.classList.remove('fav');
+    heart.textContent = '🤍';
+  }
+
+  // Clique sur le cœur pour ajouter/enlever des favoris
+  heart.addEventListener('click', () => {
+    if (heart.classList.contains('fav')) {
+      heart.classList.remove('fav');
+      heart.textContent = '🤍';
+      localStorage.setItem('fav_' + id, 'false');
+    } else {
+      heart.classList.add('fav');
+      heart.textContent = '❤️';
+      localStorage.setItem('fav_' + id, 'true');
+    }
+  });
+});
+
 </script>
   
 </body>
