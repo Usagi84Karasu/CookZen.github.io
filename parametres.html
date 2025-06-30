@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookZen</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f8f8f8;
+    }
+    .footer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #db3131;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      z-index: 10;
+    }
+    .barre {
+      position: fixed;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
+    }
+    .contenu {
+      margin-top: 140px;
+      padding: 20px;
+      font-size: 18px;
+    }
+    .cookzen-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 20;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #db3131;
+}
+
+.nav-btn:focus {
+  outline: none;
+}
+
+body {
+  padding-bottom: 70px; /* pour éviter que le contenu passe derrière la nav */
+}
+
+  </style>
+</head>
+<body>
+  <div class="footer">
+    <div class="cookzen-title">CookZen</div>
+  </div>
+  <div class="bottom-nav">
+  <a class="nav-btn" href="index.html">🏠</a>
+  <a class="nav-btn" href="favoris.html">❤️</a>
+  <a class="nav-btn" href="parametres.html">⚙️</a>
+</div>
+  <div class="barre"></div>
+  <script>
+  document.querySelectorAll(".nav-btn").forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      alert("Onglet " + index + " cliqué !");
+      // Tu peux ici faire un scroll vers une section, ou changer de page
+    });
+  });
+</script>
+  
+</body>
+</html>
