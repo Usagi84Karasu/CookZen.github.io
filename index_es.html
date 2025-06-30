@@ -36,16 +36,16 @@
     }
 
     .contenu {
-  margin-top: 140px;
-  padding: 20px;
-  font-size: 18px;
-}
+      margin-top: 140px;
+      padding: 20px;
+      font-size: 18px;
+    }
 
-@media (max-width: 480px) {
-  .contenu {
-    margin-top: 120px; /* réduit l'espace blanc sur petit écran */
-  }
-}
+    @media (max-width: 480px) {
+      .contenu {
+        margin-top: 120px;
+      }
+    }
 
     .recette-item {
       margin-bottom: 30px;
@@ -73,14 +73,14 @@
     }
 
     .search-input {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
 
     .recette-content {
       display: none;
@@ -130,32 +130,32 @@
     }
 
     .cookzen-title {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-  font-size: 48px; /* plus gros */
-  font-weight: bold;
-  color: white;
-}
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+    }
 
     #lang-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  background: white;
-  color: #db3131;
-  border: none;
-  border-radius: 5px;
-  font-size: 24px;
-  padding: 6px 10px;
-  cursor: pointer;
-  z-index: 11;
-  transition: background 0.2s;
-}
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: white;
+      color: #db3131;
+      border: none;
+      border-radius: 5px;
+      font-size: 24px;
+      padding: 6px 10px;
+      cursor: pointer;
+      z-index: 11;
+      transition: background 0.2s;
+    }
 
-#lang-btn:hover {
-  background: #f1f1f1;
-}
+    #lang-btn:hover {
+      background: #f1f1f1;
+    }
 
   </style>
 </head>
@@ -173,57 +173,62 @@
   <button id="filter-btn">Mostrar Favoritos</button>
 
   <div id="recipeList">
-    <div class="recette-item" data-id="pain">
+
+    <div class="recette-item" data-id="pan">
       <span class="heart">🤍</span>
       <div class="recette-title">🍞 Pan sin gluten
-        <button class="voir-btn" onclick="afficheRecette('pain')">Ver</button>
+        <button class="voir-btn" onclick="afficheRecette('pan')">Ver</button>
       </div>
-      <div id="pain" class="recette-content">
+      <div id="pan" class="recette-content">
         <ul>
-          <li>250g de harina de arroz</li>
-          <li>100g de maicena</li>
-          <li>1 sobre de levadura</li>
-          <li>300ml de agua tibia</li>
-          <li>1 cda de aceite de oliva</li>
+          <li>500 g de harina sin gluten</li>
+          <li>1 paquete de levadura seca de panadero</li>
+          <li>1 cda de azúcar</li>
           <li>1 cdta de sal</li>
+          <li>3 cdas de aceite de oliva</li>
+          <li>400 ml de agua tibia</li>
         </ul>
-        <a class="etape-btn" href="pain_es.html">Ver pasos</a>
+        <a class="etape-btn" href="pan_es.html">Ver pasos</a>
       </div>
     </div>
 
     <div class="recette-item" data-id="pizza">
       <span class="heart">🤍</span>
-      <div class="recette-title">🍕 Masa de pizza sin gluten
+      <div class="recette-title">🍕 Masa para pizza sin gluten
         <button class="voir-btn" onclick="afficheRecette('pizza')">Ver</button>
       </div>
       <div id="pizza" class="recette-content">
         <ul>
-          <li>200g de harina sin gluten</li>
-          <li>1/2 sobre de levadura</li>
-          <li>120ml de agua tibia</li>
-          <li>1 cda de aceite de oliva</li>
-          <li>Una pizca de sal</li>
+          <li>250 g de harina sin gluten</li>
+          <li>1 cdta de sal</li>
+          <li>1 cdta de azúcar</li>
+          <li>1 paquete de levadura seca de panadero</li>
+          <li>2 cdas de aceite de oliva</li>
+          <li>180 ml de agua tibia</li>
         </ul>
         <a class="etape-btn" href="pizza_es.html">Ver pasos</a>
       </div>
     </div>
 
-    <div class="recette-item" data-id="cookies">
+    <div class="recette-item" data-id="galletas">
       <span class="heart">🤍</span>
       <div class="recette-title">🍪 Galletas sin gluten
-        <button class="voir-btn" onclick="afficheRecette('cookie')">Ver</button>
+        <button class="voir-btn" onclick="afficheRecette('galletas')">Ver</button>
       </div>
-      <div id="cookie" class="recette-content">
+      <div id="galletas" class="recette-content">
         <ul>
-          <li>100g de mantequilla blanda</li>
-          <li>100g de azúcar</li>
+          <li>120 g de harina sin gluten</li>
+          <li>100 g de azúcar moreno</li>
           <li>1 huevo</li>
-          <li>150g de harina de almendra</li>
-          <li>Chispas de chocolate</li>
+          <li>80 g de mantequilla blanda</li>
+          <li>1/2 cdta de polvo de hornear sin gluten</li>
+          <li>1/2 cdta de extracto de vainilla</li>
+          <li>100 g de chispas de chocolate negro</li>
         </ul>
-        <a class="etape-btn" href="cookie_es.html">Ver pasos</a>
+        <a class="etape-btn" href="galletas_es.html">Ver pasos</a>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -256,10 +261,8 @@ function afficheRecette(id) {
 let filterOn = false;
 const filterBtn = document.getElementById('filter-btn');
 
-// Récupère les favoris depuis localStorage (ou tableau vide)
 let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
 
-// Applique les favoris enregistrés
 document.querySelectorAll('.recette-item').forEach(item => {
   const id = item.getAttribute('data-id');
   const heart = item.querySelector('.heart');
@@ -290,7 +293,7 @@ filterBtn.addEventListener('click', () => {
   filterOn = !filterOn;
 
   if (filterOn) {
-    filterBtn.textContent = "Afficher tout";
+    filterBtn.textContent = "Mostrar todo";
     document.querySelectorAll('.recette-item').forEach(item => {
       const heart = item.querySelector('.heart');
       if (!heart.classList.contains('fav')) {
@@ -298,7 +301,7 @@ filterBtn.addEventListener('click', () => {
       }
     });
   } else {
-    filterBtn.textContent = "Afficher les Favoris";
+    filterBtn.textContent = "Mostrar Favoritos";
     document.querySelectorAll('.recette-item').forEach(item => {
       item.style.display = 'block';
     });
@@ -308,3 +311,4 @@ filterBtn.addEventListener('click', () => {
 
 </body>
 </html>
+
