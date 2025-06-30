@@ -1,433 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CookZen</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choisissez votre langue</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
       background: #f8f8f8;
-    }
-
-    .footer {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 120px;
-      background: #db3131;
-      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 32px;
-      z-index: 10;
+      height: 100vh;
     }
 
-    .barre {
-      position: fixed;
-      top: 120px;
-      left: 0;
-      width: 100%;
-      height: 8px;
-      background: black;
-      z-index: 9;
+    .langue-container {
+      text-align: center;
     }
 
-    .contenu {
-  margin-top: 140px;
-  padding: 20px;
-  font-size: 18px;
-}
-
-@media (max-width: 480px) {
-  .contenu {
-    margin-top: 120px; /* réduit l'espace blanc sur petit écran */
-  }
-}
-
-    .recette-item {
+    h1 {
       margin-bottom: 30px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 15px;
-      position: relative;
-    }
-
-    .recette-title {
-      font-size: 20px;
-      font-weight: bold;
-      padding-left: 40px;
-    }
-
-    .voir-btn, .etape-btn {
-      margin-top: 6px;
-      padding: 6px 12px;
-      font-size: 14px;
-      background: #db3131;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      display: inline-block;
-    }
-
-    .search-input {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-    .recette-content {
-      display: none;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-
-    .recette-content.active {
-      display: block;
-    }
-
-    .heart {
-      font-size: 26px;
       color: #db3131;
-      cursor: pointer;
-      position: absolute;
-      left: 0;
-      top: 0;
-      transition: 0.3s;
+      font-size: 32px;
     }
 
-    .heart.fav {
-      color: red;
-    }
-
-    #filter-btn {
-      margin-bottom: 30px;
-      padding: 10px 20px;
-      background-color: #5865F2;
-      color: white;
+    .langue-btn {
+      margin: 10px;
+      padding: 20px 30px;
+      font-size: 18px;
       border: none;
-      border-radius: 20px;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
     }
 
-    #filter-btn:hover {
-      background-color: #404EED;
+    .langue-btn:hover {
+      transform: scale(1.05);
     }
-
-    @media (max-width: 480px) {
-      .footer { font-size: 24px; height: 110px; }
-      .barre { top: 110px; }
-      .discord-zone img { width: 60px; height: 60px; }
-      .discord-zone span { font-size: 12px; }
-      .recette-title { font-size: 18px; }
-    }
-
-    .cookzen-title {
-  position: absolute;
-  bottom: 10px;
-  left: 20px;
-  font-size: 48px; /* plus gros */
-  font-weight: bold;
-  color: white;
-}
-
-    #lang-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  background: white;
-  color: #db3131;
-  border: none;
-  border-radius: 5px;
-  font-size: 24px;
-  padding: 6px 10px;
-  cursor: pointer;
-  z-index: 11;
-  transition: background 0.2s;
-}
-
-#lang-btn:hover {
-  background: #f1f1f1;
-}
-
   </style>
 </head>
 <body>
 
-<div class="footer">
-  <div class="cookzen-title">CookZen</div>
-</div>
-
-  <button id="lang-btn" onclick="openLanguageModal()">🌐</button>
-
-  <div class="barre"></div>
-
-  <div class="contenu">
-   <input type="text" id="searchInput" class="search-input" placeholder="Rechercher une recette..." onkeyup="filterRecipes()">
-
-    <button id="filter-btn">Afficher les Favoris</button>
-    
-<div id="recipeList">
-    <div class="recette-item" data-id="pain">
-      <span class="heart">🤍</span>
-      <div class="recette-title">🍞 Pain sans gluten
-        <button class="voir-btn" onclick="afficheRecette('pain')">Voir</button>
-      </div>
-      <div id="pain" class="recette-content">
-        <ul>
-          <li>250 g farine de riz</li>
-          <li>100 g fécule de maïs</li>
-          <li>1 sachet levure</li>
-          <li>300 ml eau tiède</li>
-          <li>1 c. à s. huile d'olive</li>
-          <li>1 c. à c. sel</li>
-        </ul>
-        <a class="etape-btn" href="pain.html">Voir les étapes</a>
-      </div>
-    </div>
-
-    <div class="recette-item" data-id="pizza">
-      <span class="heart">🤍</span>
-      <div class="recette-title">🍕 Pâte à pizza sans gluten
-        <button class="voir-btn" onclick="afficheRecette('pizza')">Voir</button>
-      </div>
-      <div id="pizza" class="recette-content">
-        <ul>
-          <li>200 g farine sans gluten</li>
-          <li>1/2 sachet levure</li>
-          <li>120 ml eau tiède</li>
-          <li>1 c. à s. huile d'olive</li>
-          <li>1 pincée de sel</li>
-        </ul>
-        <a class="etape-btn" href="pizza.html">Voir les étapes</a>
-      </div>
-    </div>
-
-    <div class="recette-item" data-id="cookies">
-      <span class="heart">🤍</span>
-      <div class="recette-title">🍪 Cookies sans gluten
-        <button class="voir-btn" onclick="afficheRecette('cookie')">Voir</button>
-      </div>
-      <div id="cookie" class="recette-content">
-        <ul>
-          <li>100 g beurre mou</li>
-          <li>100 g sucre</li>
-          <li>1 œuf</li>
-          <li>150 g poudre d’amande</li>
-          <li>Pépites de chocolat</li>
-        </ul>
-        <a class="etape-btn" href="cookie.html">Voir les étapes</a>
-      </div>
-    </div>
-  </div>
+  <div class="langue-container">
+    <h1>Choisissez votre langue</h1>
+    <button class="langue-btn" onclick="setLang('fr')">🇫🇷 Français</button>
+    <button class="langue-btn" onclick="setLang('en')">🇬🇧 English</button>
+    <button class="langue-btn" onclick="setLang('es')">🇪🇸 Español</button>
   </div>
 
-  <!-- Popup de sélection de langue -->
-<div id="language-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; justify-content:center; align-items:center;">
-  <div style="background:white; padding:30px; border-radius:10px; text-align:center; max-width:300px;">
-    <h2>Choisissez votre langue</h2>
-    <select id="language-select">
-      <option value="fr">🇫🇷 Français</option>
-      <option value="en">🇬🇧 English</option>
-      <option value="es">🇪🇸 Español</option>
-    </select>
-    <br><br>
-    <button onclick="saveLanguageChoice()">Valider</button>
-  </div>
-</div>
-
-<script>
-
-  // Fonction appelée au démarrage
-function checkLanguage() {
-  const lang = localStorage.getItem('language');
-  if (!lang) {
-    // Si aucune langue enregistrée, afficher le sélecteur
-    document.getElementById('language-modal').style.display = 'flex';
-  } else {
-    applyLanguage(lang);
-  }
-}
-
-// Fonction appelée au clic sur "Valider"
-function saveLanguageChoice() {
-  const lang = document.getElementById('language-select').value;
-  localStorage.setItem('language', lang);
-  document.getElementById('language-modal').style.display = 'none';
-  applyLanguage(lang);
-}
-
-// Fonction d'application de la langue (à personnaliser si besoin)
-function applyLanguage(lang) {
-  console.log("Langue choisie :", lang);
-  // Ici, tu peux ajouter du code pour traduire les textes plus tard
-}
-
-// Lancer la vérification au chargement de la page
-window.addEventListener('DOMContentLoaded', checkLanguage);
-
-function filterRecipes() {
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const recipes = document.querySelectorAll("#recipeList .recette-item");
-
-  recipes.forEach(recipe => {
-    const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
-    const isFavorite = recipe.querySelector('.heart').classList.contains('fav');
-
-    const matchesSearch = title.includes(input);
-    const shouldBeVisible = matchesSearch && (!filterOn || isFavorite);
-
-    recipe.style.display = shouldBeVisible ? "" : "none";
-  });
-}
-
-function afficheRecette(id) {
-  document.querySelectorAll('.recette-content').forEach(el => {
-    if (el.id === id) {
-      el.classList.toggle('active');
-    } else {
-      el.classList.remove('active');
-    }
-  });
-}
-
-let filterOn = false;
-const filterBtn = document.getElementById('filter-btn');
-
-// Récupère les favoris depuis localStorage (ou tableau vide)
-let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
-
-// Applique les favoris enregistrés
-document.querySelectorAll('.recette-item').forEach(item => {
-const id = item.getAttribute('data-id');
-  const heart = item.querySelector('.heart');
-
-  if (favoris.includes(id)) {
-    heart.classList.add('fav');
-    heart.textContent = '🤎';
-  } else {
-    heart.classList.remove('fav');
-    heart.textContent = '🤍';
-  }
-
-  heart.addEventListener('click', () => {
-    const isFav = heart.classList.toggle('fav');
-    heart.textContent = isFav ? '🤎' : '🤍';
-
-    if (isFav) {
-      if (!favoris.includes(id)) favoris.push(id);
-    } else {
-      favoris = favoris.filter(favId => favId !== id);
-    }
-
-    localStorage.setItem('favoris', JSON.stringify(favoris));
-  });
-});
-
-filterBtn.addEventListener('click', () => {
-  filterOn = !filterOn;
-
-  if (filterOn) {
-    filterBtn.textContent = "Afficher tout";
-    document.querySelectorAll('.recette-item').forEach(item => {
-      const heart = item.querySelector('.heart');
-      if (!heart.classList.contains('fav')) {
-        item.style.display = 'none';
+  <script>
+    function setLang(lang) {
+      localStorage.setItem('language', lang);
+      if (lang === 'fr') {
+        window.location.href = 'index_fr.html';
+      } else if (lang === 'en') {
+        window.location.href = 'index_en.html';
+      } else if (lang === 'es') {
+        window.location.href = 'index_es.html';
       }
-    });
-  } else {
-    filterBtn.textContent = "Afficher les Favoris";
-    document.querySelectorAll('.recette-item').forEach(item => {
-      item.style.display = 'block';
-    });
-  }
-});
-
-    function applyLanguage(lang) {
-  const translations = {
-    fr: {
-      title: "CookZen",
-      searchPlaceholder: "Rechercher une recette...",
-      filterBtn: "Afficher les Favoris",
-      favorisBtnAlt: "Afficher tout",
-      chooseLang: "Choisissez votre langue",
-      validate: "Valider",
-      recipes: {
-        pain: "🍞 Pain sans gluten",
-        pizza: "🍕 Pâte à pizza sans gluten",
-        cookies: "🍪 Cookies sans gluten"
-      },
-      steps: "Voir les étapes",
-      voir: "Voir"
-    },
-    en: {
-      title: "CookZen",
-      searchPlaceholder: "Search a recipe...",
-      filterBtn: "Show Favorites",
-      favorisBtnAlt: "Show All",
-      chooseLang: "Choose your language",
-      validate: "Validate",
-      recipes: {
-        pain: "🍞 Gluten-Free Bread",
-        pizza: "🍕 Gluten-Free Pizza Dough",
-        cookies: "🍪 Gluten-Free Cookies"
-      },
-      steps: "View Steps",
-      voir: "View"
-    },
-    es: {
-      title: "CookZen",
-      searchPlaceholder: "Buscar una receta...",
-      filterBtn: "Mostrar Favoritos",
-      favorisBtnAlt: "Mostrar Todo",
-      chooseLang: "Elige tu idioma",
-      validate: "Validar",
-      recipes: {
-        pain: "🍞 Pan sin gluten",
-        pizza: "🍕 Masa de pizza sin gluten",
-        cookies: "🍪 Galletas sin gluten"
-      },
-      steps: "Ver pasos",
-      voir: "Ver"
     }
-  };
+  </script>
 
-  const t = translations[lang];
-
-  // Appliquer les traductions aux éléments
-  document.querySelector('.cookzen-title').textContent = t.title;
-  document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-  document.getElementById('filter-btn').textContent = filterOn ? t.favorisBtnAlt : t.filterBtn;
-  document.querySelector('#language-modal h2').textContent = t.chooseLang;
-  document.querySelector('#language-modal button').textContent = t.validate;
-
-  // Recettes
-  document.querySelectorAll('.recette-item').forEach(item => {
-    const id = item.getAttribute('data-id');
-    const titleEl = item.querySelector('.recette-title');
-    const voirBtn = item.querySelector('.voir-btn');
-    const etapeBtn = item.querySelector('.etape-btn');
-
-    if (titleEl && t.recipes[id]) {
-      titleEl.childNodes[0].textContent = t.recipes[id] + " ";
-    }
-    if (voirBtn) voirBtn.textContent = t.voir;
-    if (etapeBtn) etapeBtn.textContent = t.steps;
-  });
-}
-
-  function openLanguageModal() {
-  document.getElementById('language-modal').style.display = 'flex';
-}
-
-</script>
-  
 </body>
 </html>
