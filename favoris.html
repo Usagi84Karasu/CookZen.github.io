@@ -148,6 +148,24 @@
       background-color: #404EED;
     }
 
+#filtrerFavorisBtn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #db3131;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#filtrerFavorisBtn.active {
+  background-color: #aaa;
+}
+
+    
     @media (max-width: 480px) {
       .footer { font-size: 24px; height: 110px; }
       .barre { top: 110px; }
@@ -202,6 +220,7 @@
   
   <div class="contenu">
    <input type="text" id="searchInput" class="search-input" placeholder="Rechercher une recette..." onkeyup="filterRecipes()">
+<button id="filtrerFavorisBtn" onclick="filtrerFavoris()">Afficher les favoris ❤️</button>
     
 <div id="recipeList">
     <div class="recette-item" data-id="pain">
@@ -607,6 +626,80 @@ filterBtn.addEventListener('click', () => {
       }
     });
   });
+
+let montrerFavorisSeulement = false;
+
+function filtrerFavoris() {
+  montrerFavorisSeulement = !montrerFavorisSeulement;
+  const bouton = document.getElementById('filtrerFavorisBtn');
+  const recettes = document.querySelectorAll('.recette-item');
+
+  recettes.forEach(recette => {
+    const coeur = recette.querySelector('.heart');
+    if (montrerFavorisSeulement) {
+      bouton.textContent = "Afficher tout";
+      bouton.classList.add('active');
+      if (!coeur.classList.contains('fav')) {
+        recette.style.display = 'none';
+      } else {
+        recette.style.display = '';
+      }
+    } else {
+      bouton.textContent = "Afficher les favoris ❤️";
+      bouton.classList.remove('active');
+      recette.style.display = '';
+    }
+  });
+}
+
+let montrerFavorisSeulement = false;
+
+function filtrerFavoris(force = false) {
+  // Si on veut forcer l'affichage des favoris (au chargement)
+  if (force) {
+    montrerFavorisSeulement = true;
+  } else {
+    montrerFavorisSeulement = !montrerFavorisSeulement;
+  }
+
+  const bouton = document.getElementById('filtrerFavorisBtn');
+  const recettes = document.querySelectorAll('.recette-item');
+
+  recettes.forEach(recette => {
+    const coeur = recette.querySelector('.heart');
+    if (montrerFavorisSeulement) {
+      if (bouton) {
+        bouton.textContent = "Afficher tout";
+        bouton.classList.add('active');
+      }
+      if (!coeur.classList.contains('fav')) {
+        recette.style.display = 'none';
+      } else {
+        recette.style.display = '';
+      }
+    } else {
+      if (bouton) {
+        bouton.textContent = "Afficher les favoris ❤️";
+        bouton.classList.remove('active');
+      }
+      recette.style.display = '';
+    }
+  });
+}
+
+// Clic sur les cœurs (si pas déjà dans ton code)
+document.querySelectorAll('.heart').forEach(heart => {
+  heart.addEventListener('click', () => {
+    heart.classList.toggle('fav');
+    heart.textContent = heart.classList.contains('fav') ? '❤️' : '🤍';
+  });
+});
+
+// Active automatiquement le filtre quand la page se charge
+window.addEventListener('DOMContentLoaded', () => {
+  filtrerFavoris(true); // true = on active le filtre directement
+});
+
 </script>
   
 </body>
