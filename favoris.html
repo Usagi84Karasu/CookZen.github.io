@@ -666,6 +666,23 @@ afficherFavorisSeulement(); // Masque les non-favoris
       heart.textContent = heart.classList.contains('fav') ? '❤️' : '🤍';
     });
   });
+
+   document.querySelectorAll('.heart').forEach((heart, index) => {
+    const key = `fav_${index}`;
+    
+    // Vérifie si ce cœur est en favori dans le localStorage
+    if (localStorage.getItem(key) === 'true') {
+      heart.classList.add('fav');
+      heart.textContent = '❤️';
+    }
+
+    heart.addEventListener('click', () => {
+      heart.classList.toggle('fav');
+      const isFav = heart.classList.contains('fav');
+      heart.textContent = isFav ? '❤️' : '🤍';
+      localStorage.setItem(key, isFav);
+    });
+  });
 </script>
   
 </body>
