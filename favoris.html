@@ -659,8 +659,13 @@ afficherFavorisSeulement(); // Masque les non-favoris
       }
     });
   }
-</script>
 
+    document.querySelectorAll('.heart').forEach(heart => {
+    heart.addEventListener('click', () => {
+      heart.classList.toggle('fav');
+      heart.textContent = heart.classList.contains('fav') ? '❤️' : '🤍';
+    });
+  });
 </script>
   
 </body>
