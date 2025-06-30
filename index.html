@@ -558,6 +558,18 @@ filterBtn.addEventListener('click', () => {
   }
 });
 
+  function toggleFavori(heartElement) {
+  const recetteDiv = heartElement.closest('.recette-item');
+  const recetteId = recetteDiv.getAttribute('data-id');
+  let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+  if (favoris.includes(recetteId)) {
+    favoris = favoris.filter(f => f !== recetteId);
+    heartElement.classList.remove('fav');
+  } else {
+    favoris.push(recetteId);
+    heartElement.classList.add('fav');
+  }
 </script>
   
 </body>
