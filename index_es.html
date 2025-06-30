@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CookZen</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f8f8f8;
+    }
+
+    .footer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 120px;
+      background: #db3131;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      z-index: 10;
+    }
+
+    .barre {
+      position: fixed;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
+    }
+
+    .contenu {
+  margin-top: 140px;
+  padding: 20px;
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  .contenu {
+    margin-top: 120px; /* réduit l'espace blanc sur petit écran */
+  }
+}
+
+    .recette-item {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 15px;
+      position: relative;
+    }
+
+    .recette-title {
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 40px;
+    }
+
+    .voir-btn, .etape-btn {
+      margin-top: 6px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background: #db3131;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .search-input {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+    .recette-content {
+      display: none;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .recette-content.active {
+      display: block;
+    }
+
+    .heart {
+      font-size: 26px;
+      color: #db3131;
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: 0.3s;
+    }
+
+    .heart.fav {
+      color: red;
+    }
+
+    #filter-btn {
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      background-color: #5865F2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #filter-btn:hover {
+      background-color: #404EED;
+    }
+
+    @media (max-width: 480px) {
+      .footer { font-size: 24px; height: 110px; }
+      .barre { top: 110px; }
+      .discord-zone img { width: 60px; height: 60px; }
+      .discord-zone span { font-size: 12px; }
+      .recette-title { font-size: 18px; }
+    }
+
+    .cookzen-title {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  font-size: 48px; /* plus gros */
+  font-weight: bold;
+  color: white;
+}
+
+    #lang-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: white;
+  color: #db3131;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 11;
+  transition: background 0.2s;
+}
+
+#lang-btn:hover {
+  background: #f1f1f1;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="footer">
+  <div class="cookzen-title">CookZen</div>
+</div>
+
+<div class="barre"></div>
+
+<div class="contenu">
+  <input type="text" id="searchInput" class="search-input" placeholder="Buscar una receta..." onkeyup="filterRecipes()">
+
+  <button id="filter-btn">Mostrar Favoritos</button>
+
+  <div id="recipeList">
+    <div class="recette-item" data-id="pain">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍞 Pan sin gluten
+        <button class="voir-btn" onclick="afficheRecette('pain')">Ver</button>
+      </div>
+      <div id="pain" class="recette-content">
+        <ul>
+          <li>250g de harina de arroz</li>
+          <li>100g de maicena</li>
+          <li>1 sobre de levadura</li>
+          <li>300ml de agua tibia</li>
+          <li>1 cda de aceite de oliva</li>
+          <li>1 cdta de sal</li>
+        </ul>
+        <a class="etape-btn" href="pain.html">Ver pasos</a>
+      </div>
+    </div>
+
+    <div class="recette-item" data-id="pizza">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍕 Masa de pizza sin gluten
+        <button class="voir-btn" onclick="afficheRecette('pizza')">Ver</button>
+      </div>
+      <div id="pizza" class="recette-content">
+        <ul>
+          <li>200g de harina sin gluten</li>
+          <li>1/2 sobre de levadura</li>
+          <li>120ml de agua tibia</li>
+          <li>1 cda de aceite de oliva</li>
+          <li>Una pizca de sal</li>
+        </ul>
+        <a class="etape-btn" href="pizza.html">Ver pasos</a>
+      </div>
+    </div>
+
+    <div class="recette-item" data-id="cookies">
+      <span class="heart">🤍</span>
+      <div class="recette-title">🍪 Galletas sin gluten
+        <button class="voir-btn" onclick="afficheRecette('cookie')">Ver</button>
+      </div>
+      <div id="cookie" class="recette-content">
+        <ul>
+          <li>100g de mantequilla blanda</li>
+          <li>100g de azúcar</li>
+          <li>1 huevo</li>
+          <li>150g de harina de almendra</li>
+          <li>Chispas de chocolate</li>
+        </ul>
+        <a class="etape-btn" href="cookie.html">Ver pasos</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function filterRecipes() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const recipes = document.querySelectorAll("#recipeList .recette-item");
+
+  recipes.forEach(recipe => {
+    const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
+    const isFavorite = recipe.querySelector('.heart').classList.contains('fav');
+
+    const matchesSearch = title.includes(input);
+    const shouldBeVisible = matchesSearch && (!filterOn || isFavorite);
+
+    recipe.style.display = shouldBeVisible ? "" : "none";
+  });
+}
+
+function afficheRecette(id) {
+  document.querySelectorAll('.recette-content').forEach(el => {
+    if (el.id === id) {
+      el.classList.toggle('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+}
+
+let filterOn = false;
+const filterBtn = document.getElementById('filter-btn');
+
+// Récupère les favoris depuis localStorage (ou tableau vide)
+let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+// Applique les favoris enregistrés
+document.querySelectorAll('.recette-item').forEach(item => {
+  const id = item.getAttribute('data-id');
+  const heart = item.querySelector('.heart');
+
+  if (favoris.includes(id)) {
+    heart.classList.add('fav');
+    heart.textContent = '🤎';
+  } else {
+    heart.classList.remove('fav');
+    heart.textContent = '🤍';
+  }
+
+  heart.addEventListener('click', () => {
+    const isFav = heart.classList.toggle('fav');
+    heart.textContent = isFav ? '🤎' : '🤍';
+
+    if (isFav) {
+      if (!favoris.includes(id)) favoris.push(id);
+    } else {
+      favoris = favoris.filter(favId => favId !== id);
+    }
+
+    localStorage.setItem('favoris', JSON.stringify(favoris));
+  });
+});
+
+filterBtn.addEventListener('click', () => {
+  filterOn = !filterOn;
+
+  if (filterOn) {
+    filterBtn.textContent = "Afficher tout";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      const heart = item.querySelector('.heart');
+      if (!heart.classList.contains('fav')) {
+        item.style.display = 'none';
+      }
+    });
+  } else {
+    filterBtn.textContent = "Afficher les Favoris";
+    document.querySelectorAll('.recette-item').forEach(item => {
+      item.style.display = 'block';
+    });
+  }
+});
+</script>
+
+</body>
+</html>
