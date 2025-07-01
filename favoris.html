@@ -564,6 +564,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedColor = localStorage.getItem('themeColor');
+    if (savedColor) {
+      document.body.className = savedColor;
+    }
+  });
+</script>
 
 </script>
 
