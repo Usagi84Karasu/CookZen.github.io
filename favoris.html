@@ -573,14 +573,27 @@ body.violet {
     localStorage.setItem("favoris", JSON.stringify(favoris));
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('cookzenTheme');
-    if (savedTheme) {
-      document.body.className = savedTheme;
-    }
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  const banner = document.getElementById('banner');
+  const inputs = document.querySelectorAll('input[name="theme"]');
+  const saved = localStorage.getItem('cookzenTheme');
 
-  document.body.className = input.value;
+  // Appliquer la classe au chargement
+  if (saved && banner) {
+    banner.className = saved;
+  }
+
+  // Au changement des radios
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.checked && banner) {
+        localStorage.setItem('cookzenTheme', input.value);
+        banner.className = input.value;
+      }
+    });
+  });
+});
+
 
 </script>
 
