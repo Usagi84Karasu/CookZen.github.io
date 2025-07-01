@@ -233,7 +233,7 @@ body.violet {
 <body>
 
 <div class="footer">
-  <div class="cookzen-title">CookZen</div>
+  <div class="cookzen-title banner">CookZen</div>
 </div>
 
   <div class="barre"></div>
@@ -250,7 +250,7 @@ body.violet {
     <div class="recette-item" data-id="pain">
       <span class="heart">🤍</span>
       <div class="recette-title">🍞 Pain sans gluten
-        <button class="voir-btn" onclick="afficheRecette('pain')">Voir</button>
+        <button class="voir-btn button" onclick="afficheRecette('pain')">Voir</button>
       </div>
       <div id="pain" class="recette-content">
         <ul>
@@ -556,31 +556,24 @@ body.violet {
     localStorage.setItem("favoris", JSON.stringify(favoris));
   }
 
-  const theme = localStorage.getItem('cookzenTheme') || 'original';
-  document.body.classList.add(theme);
 
-  const theme = localStorage.getItem('cookzenTheme') || 'red';
-  const colors = {
-    red:    '#e57373',
-    orange: '#ffb74d',
-    blue:   '#64b5f6',
-    purple: '#ba68c8'
-  };
+  window.addEventListener('DOMContentLoaded', () => {
+    const theme = localStorage.getItem('cookzenTheme') || 'red';
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const color = colors[theme];
+    // Définis les couleurs par thème
+    const themeColors = {
+      red:    { banner: '#e57373', button: '#f44336' },
+      orange: { banner: '#ffb74d', button: '#ff9800' },
+      blue:   { banner: '#64b5f6', button: '#2196f3' },
+      purple: { banner: '#ba68c8', button: '#9c27b0' }
+    };
 
-    // Bannière
-    const banner = document.querySelector('.banniere');
-    if (banner) banner.style.backgroundColor = color;
+    // Applique les couleurs si les éléments existent
+    const banniere = document.querySelector('.banniere');
+    const btnVoir = document.querySelector('.btn-voir');
 
-    // Boutons "voir"
-    const buttons = document.querySelectorAll('.btn-voir');
-    buttons.forEach(btn => {
-      btn.style.backgroundColor = color;
-      btn.style.border = "none";
-      btn.style.color = "#fff";
-    });
+    if (banniere) banniere.style.backgroundColor = themeColors[theme].banner;
+    if (btnVoir)  btnVoir.style.backgroundColor = themeColors[theme].button;
   });
 
 </script>
