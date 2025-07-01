@@ -84,5 +84,11 @@
     Laissez refroidir 5 à 10 minutes avant de les manipuler</p>
 
   </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
