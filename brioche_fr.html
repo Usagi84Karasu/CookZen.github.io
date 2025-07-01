@@ -81,5 +81,11 @@
   <p>Déposez dans un moule à cake ou un mini moules, dorez avec un peu d’œuf.<br>
   Enfournez à 180 °C pendant 25–30 min, jusqu’à ce que le dessus soit doré.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
