@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookZen - Pâte à Pizza</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f8f8f8;
+    }
+
+    /* Styles pour les thèmes de la bannière */
+    body.red .footer {
+      background-color: #db3131;
+    }
+    body.orange .footer {
+      background-color: #ffb74d;
+    }
+    body.blue .footer {
+      background-color: #64b5f6;
+    }
+    body.purple .footer {
+      background-color: #ba68c8;
+    }
+    
+    .footer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #db3131;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      z-index: 10;
+    }
+    .barre {
+      position: fixed;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
+    }
+    .contenu {
+      margin-top: 140px;
+      padding: 20px;
+      font-size: 18px;
+    }
+    .cookzen-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="footer">
+    <div class="cookzen-title">CookZen</div>
+  </div>
+  <div class="barre"></div>
+<div class="contenu">
+  <p><strong>Préparer la pâte</strong></p>
+  <p>Mélangez 200 g de farine de riz, 50 g de fécule de maïs, 1 sachet de levure chimique sans gluten, 80 g de sucre et 1 pincée de sel.<br>
+  Ajoutez 2 œufs, 100 ml de lait, 80 ml d'huile neutre.<br>
+  Mélangez jusqu’à obtenir une pâte homogène.</p>
+
+  <p><strong>Cuisson</strong></p>
+  <p>Versez la pâte dans des moules à muffins.<br>
+  Enfournez à 180 °C pendant 20–25 min.<br>
+  Laissez refroidir avant de démouler.</p>
+</div>
+  <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
+</body>
+</html>

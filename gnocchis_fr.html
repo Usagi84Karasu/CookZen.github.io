@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookZen - Pâte à Pizza</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f8f8f8;
+    }
+
+    /* Styles pour les thèmes de la bannière */
+    body.red .footer {
+      background-color: #db3131;
+    }
+    body.orange .footer {
+      background-color: #ffb74d;
+    }
+    body.blue .footer {
+      background-color: #64b5f6;
+    }
+    body.purple .footer {
+      background-color: #ba68c8;
+    }
+    
+    .footer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #db3131;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      z-index: 10;
+    }
+    .barre {
+      position: fixed;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: black;
+      z-index: 9;
+    }
+    .contenu {
+      margin-top: 140px;
+      padding: 20px;
+      font-size: 18px;
+    }
+    .cookzen-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="footer">
+    <div class="cookzen-title">CookZen</div>
+  </div>
+  <div class="barre"></div>
+<div class="contenu">
+  <p><strong>Préparer la pâte</strong></p>
+  <p>Faites cuire 500 g de pommes de terre à l'eau.<br>
+  Écrasez-les en purée et laissez refroidir.<br>
+  Ajoutez 150 g de farine de riz, 50 g de farine de tapioca, 1 œuf, 1 pincée de sel.<br>
+  Mélangez jusqu’à obtenir une pâte souple.</p>
+
+  <p><strong>Façonnage et repos</strong></p>
+  <p>Formez des rouleaux de pâte, découpez en petits morceaux.<br>
+  Roulez chaque morceau avec une fourchette pour former les rainures.<br>
+  Laissez reposer 10 min.</p>
+
+  <p><strong>Cuisson</strong></p>
+  <p>Faites bouillir de l’eau salée.<br>
+  Plongez les gnocchis et dès qu’ils remontent à la surface, égouttez-les.<br>
+  Servez avec la sauce de votre choix.</p>
+</div>
+  <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
+</body>
+</html>
