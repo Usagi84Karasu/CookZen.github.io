@@ -661,6 +661,28 @@ if (filterBtn) {
     });
   }
 
+  document.querySelectorAll('.heart').forEach(heart => {
+    heart.addEventListener('click', () => {
+      heart.classList.toggle('fav'); // ajoute ou enlève la classe "fav" (cœur rouge)
+      // Sauvegarder l'état dans le localStorage
+      const id = heart.parentElement.getAttribute('data-id');
+      if (heart.classList.contains('fav')) {
+        localStorage.setItem('fav_' + id, 'true');
+      } else {
+        localStorage.removeItem('fav_' + id);
+      }
+    });
+  });
+
+  // Au chargement, on remet les favoris selon localStorage
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.heart').forEach(heart => {
+      const id = heart.parentElement.getAttribute('data-id');
+      if(localStorage.getItem('fav_' + id) === 'true') {
+        heart.classList.add('fav');
+      }
+    });
+  });
 
 </script>
   
