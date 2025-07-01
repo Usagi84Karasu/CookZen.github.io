@@ -559,6 +559,30 @@ body.violet {
   const theme = localStorage.getItem('cookzenTheme') || 'original';
   document.body.classList.add(theme);
 
+  const theme = localStorage.getItem('cookzenTheme') || 'red';
+  const colors = {
+    red:    '#e57373',
+    orange: '#ffb74d',
+    blue:   '#64b5f6',
+    purple: '#ba68c8'
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const color = colors[theme];
+
+    // Bannière
+    const banner = document.querySelector('.banniere');
+    if (banner) banner.style.backgroundColor = color;
+
+    // Boutons "voir"
+    const buttons = document.querySelectorAll('.btn-voir');
+    buttons.forEach(btn => {
+      btn.style.backgroundColor = color;
+      btn.style.border = "none";
+      btn.style.color = "#fff";
+    });
+  });
+
 </script>
 
 </body>
