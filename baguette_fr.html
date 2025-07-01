@@ -10,6 +10,41 @@
       font-family: sans-serif;
       background: #f8f8f8;
     }
+
+body.rouge {
+  background-color: #ffeded;
+  color: #a80000;
+}
+
+body.orange {
+  background-color: #fff4e5;
+  color: #b35b00;
+}
+
+body.bleu {
+  background-color: #e6f0ff;
+  color: #003d99;
+}
+
+body.violet {
+  background-color: #f0e6ff;
+  color: #4b0082;
+}
+
+    /* Styles pour les thèmes de la bannière */
+    body.red .footer {
+      background-color: #e57373;
+    }
+    body.orange .footer {
+      background-color: #ffb74d;
+    }
+    body.blue .footer {
+      background-color: #64b5f6;
+    }
+    body.purple .footer {
+      background-color: #ba68c8;
+    }
+    
     .footer {
       position: fixed;
       top: 0;
@@ -66,5 +101,11 @@
   <p>Badigeonnez d’eau, incise légèrement.<br>
   Enfournez à 220 °C avec la vapeur (bol d’eau) pendant 25–30 min.</p>
 </div>
+  <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
