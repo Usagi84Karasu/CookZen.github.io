@@ -85,5 +85,11 @@
   <p><strong>Astuce</strong></p>
   <p>Vous pouvez ajouter un glaçage au citron ou saupoudrer du sucre glace après refroidissement.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
