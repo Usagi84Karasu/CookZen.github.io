@@ -662,26 +662,6 @@ if (filterBtn) {
   }
 
 
-  
-  window.addEventListener('DOMContentLoaded', () => {
-    const theme = localStorage.getItem('cookzenTheme') || 'red';
-
-    // Définis les couleurs par thème
-    const themeColors = {
-      red:    { banner: '#e57373', button: '#f44336' },
-      orange: { banner: '#ffb74d', button: '#ff9800' },
-      blue:   { banner: '#64b5f6', button: '#2196f3' },
-      purple: { banner: '#ba68c8', button: '#9c27b0' }
-    };
-
-    // Applique les couleurs si les éléments existent
-    const banniere = document.querySelector('.banniere');
-    const btnVoir = document.querySelector('.btn-voir');
-
-    if (banniere) banniere.style.backgroundColor = themeColors[theme].banner;
-    if (btnVoir)  btnVoir.style.backgroundColor = themeColors[theme].button;
-  });
-
 </script>
   
 </body>
