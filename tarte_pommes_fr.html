@@ -82,5 +82,11 @@
   Piquez et cuis à blanc si besoin : 180 °C, 10 min.<br>
   Puis ajoutez la garniture et poursuis la cuisson.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
