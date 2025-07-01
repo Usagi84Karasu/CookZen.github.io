@@ -78,5 +78,11 @@
   <p>Versez une petite louche dans une poêle antiadhésive légèrement huilée.<br>
   Faisez cuire 1 à 2 minutes de chaque côté à feu moyen.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
