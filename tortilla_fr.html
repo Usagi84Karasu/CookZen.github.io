@@ -79,5 +79,11 @@
   <p>Formez des boules, aplatisez entre deux papiers cuisson.<br>
   Cuits à sec dans une poêle chaude 1–2 min par face.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
