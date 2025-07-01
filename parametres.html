@@ -1,172 +1,162 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Paramètres - Changer le thème</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookZen - Paramètres</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-  /* Reset et base */
-  * {
-    box-sizing: border-box;
-    margin: 0; padding: 0;
-    font-family: 'Poppins', sans-serif;
-  }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #e0dede;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  body {
-    background: linear-gradient(135deg, #2e3440, #3b4252);
-    color: #d8dee9;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
+    .container {
+      background: #f5f5f5;
+      border-radius: 26px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      padding: 2.5rem;
+      width: 380px;
+    }
 
-  .settings-container {
-    background: linear-gradient(145deg, #434c5e, #3b4252);
-    border-radius: 16px;
-    box-shadow:  8px 8px 16px #2b3446,
-                 -8px -8px 16px #4e5b73;
-    width: 400px;
-    padding: 2.5rem 3rem;
-    backdrop-filter: saturate(180%) blur(10px);
-  }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
 
-  .settings-container h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-weight: 600;
-    color: #eceff4;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-  }
+    .option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #eeeeee;
+      border-radius: 16px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.2rem;
+      box-shadow: inset 2px 2px 6px #dcdcdc,
+                  inset -2px -2px 6px #ffffff;
+    }
 
-  .option {
-    background: linear-gradient(145deg, #3a4254, #4b566b);
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.8rem;
-    box-shadow: inset 4px 4px 6px #2f3545,
-                inset -4px -4px 6px #545f7a;
-    cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-  }
+    .option label {
+      font-size: 1.1rem;
+      color: #333;
+    }
 
-  .option:hover {
-    background: linear-gradient(145deg, #4b566b, #5a657a);
-    box-shadow: inset 6px 6px 10px #29303f,
-                inset -6px -6px 10px #626f8a;
-  }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
 
-  .option label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 500;
-    font-size: 1.1rem;
-    color: #d8dee9;
-  }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 26px;
-  }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 26px;
+    }
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
 
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #627d98;
-    border-radius: 26px;
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2),
-                inset -2px -2px 5px rgba(0,0,0,0.4);
-    transition: 0.4s;
-  }
+    input:checked + .slider {
+      background-color: #4caf50;
+    }
 
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background: linear-gradient(145deg, #eceff4, #d8dee9);
-    border-radius: 50%;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    transition: 0.4s;
-  }
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
 
-  input:checked + .slider {
-    background-color: #88c0d0;
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.6),
-                inset -2px -2px 5px rgba(0,0,0,0.3);
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(22px);
-    background: linear-gradient(145deg, #81a1c1, #5e81ac);
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-  }
-
-  /* Texture légère sur fond */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    background-image:
-      radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px),
-      radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
-    background-position: 0 0, 25px 25px;
-    background-size: 50px 50px;
-    z-index: 0;
-  }
-</style>
+    .slider.theme-red   { background-color: #e57373; }
+    .slider.theme-orange{ background-color: #ffb74d; }
+    .slider.theme-blue  { background-color: #64b5f6; }
+    .slider.theme-purple{ background-color: #ba68c8; }
+  </style>
 </head>
 <body>
 
-<div class="settings-container" role="region" aria-label="Paramètres de thème">
-  <h1>Paramètres du thème</h1>
+<div class="container">
+  <h1>Choisir un thème</h1>
 
   <div class="option">
-    <label for="darkModeToggle">
-      Mode sombre
-      <div class="switch">
-        <input type="checkbox" id="darkModeToggle" />
-        <span class="slider"></span>
-      </div>
-    </label>
+    <label for="red">Rouge</label>
+    <div class="switch">
+      <input type="checkbox" id="red" onchange="selectTheme('red')">
+      <span class="slider theme-red"></span>
+    </div>
   </div>
 
   <div class="option">
-    <label for="blueAccentToggle">
-      Accent bleu
-      <div class="switch">
-        <input type="checkbox" id="blueAccentToggle" />
-        <span class="slider"></span>
-      </div>
-    </label>
+    <label for="orange">Orange</label>
+    <div class="switch">
+      <input type="checkbox" id="orange" onchange="selectTheme('orange')">
+      <span class="slider theme-orange"></span>
+    </div>
   </div>
 
   <div class="option">
-    <label for="textureToggle">
-      Texture de fond
-      <div class="switch">
-        <input type="checkbox" id="textureToggle" />
-        <span class="slider"></span>
-      </div>
-    </label>
+    <label for="blue">Bleu</label>
+    <div class="switch">
+      <input type="checkbox" id="blue" onchange="selectTheme('blue')">
+      <span class="slider theme-blue"></span>
+    </div>
+  </div>
+
+  <div class="option">
+    <label for="purple">Violet</label>
+    <div class="switch">
+      <input type="checkbox" id="purple" onchange="selectTheme('purple')">
+      <span class="slider theme-purple"></span>
+    </div>
   </div>
 </div>
+
+<script>
+  const allThemes = ['red', 'orange', 'blue', 'purple'];
+
+  function selectTheme(selected) {
+    // Uncheck all
+    allThemes.forEach(t => {
+      document.getElementById(t).checked = false;
+    });
+    // Check only the selected
+    document.getElementById(selected).checked = true;
+
+    // Save to localStorage
+    localStorage.setItem('cookzenTheme', selected);
+  }
+
+  // On load, apply checked state
+  window.onload = () => {
+    const saved = localStorage.getItem('cookzenTheme') || 'red';
+    if (document.getElementById(saved)) {
+      document.getElementById(saved).checked = true;
+    }
+  }
+</script>
 
 </body>
 </html>
