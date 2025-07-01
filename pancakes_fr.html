@@ -79,5 +79,11 @@
   Versez une petite louche de pâte et faisez cuire 1 à 2 minutes de chaque côté.<br>
   Les pancakes doivent être épais et moelleux.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
