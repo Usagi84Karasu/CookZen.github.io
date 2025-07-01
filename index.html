@@ -616,6 +616,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme) {
       document.body.className = savedTheme;
     }
+
+  function afficheRecette(id) {
+  // Trouve l'élément recette
+  const recette = document.getElementById(id);
+  if (!recette) return;
+
+  // Si la recette est cachée, on l'affiche, sinon on la cache
+  if (recette.style.display === 'block') {
+    recette.style.display = 'none';
+  } else {
+    recette.style.display = 'block';
+  }
+}
 </script>
 
 </body>
