@@ -536,18 +536,18 @@ body.violet {
   </div>
 
 <script>
-// Fonction pour récupérer les favoris depuis localStorage
+// Récupérer les favoris depuis localStorage
 function getFavoris() {
   const favoris = localStorage.getItem('favoris');
   return favoris ? JSON.parse(favoris) : [];
 }
 
-// Fonction pour sauvegarder les favoris dans localStorage
+// Sauvegarder les favoris dans localStorage
 function saveFavoris(favoris) {
   localStorage.setItem('favoris', JSON.stringify(favoris));
 }
 
-// Met à jour l'affichage des cœurs selon le localStorage
+// Met à jour les cœurs en fonction des favoris
 function updateHearts() {
   const favoris = getFavoris();
   document.querySelectorAll('.recette-item').forEach(item => {
@@ -563,7 +563,7 @@ function updateHearts() {
   });
 }
 
-// Gestion du clic sur les cœurs pour ajouter/enlever des favoris
+// Ajoute le clic sur les cœurs pour basculer favoris
 function setupHearts() {
   document.querySelectorAll('.heart').forEach(heart => {
     heart.addEventListener('click', () => {
@@ -572,7 +572,7 @@ function setupHearts() {
       let favoris = getFavoris();
 
       if (favoris.includes(id)) {
-        // Retirer des favoris
+        // Enlever des favoris
         favoris = favoris.filter(favId => favId !== id);
       } else {
         // Ajouter aux favoris
@@ -581,50 +581,37 @@ function setupHearts() {
 
       saveFavoris(favoris);
       updateHearts();
-      filterRecipes(); // Refiltrer les recettes affichées en fonction du nouveau filtre
     });
   });
 }
 
-// Filtre les recettes selon la recherche et affiche uniquement les favoris
+// Filtre les recettes selon la recherche (par titre uniquement)
 function filterRecipes() {
   const search = document.getElementById('searchInput').value.toLowerCase();
-  const favoris = getFavoris();
 
   document.querySelectorAll('.recette-item').forEach(item => {
-    const id = item.dataset.id;
     const title = item.querySelector('.recette-title').textContent.toLowerCase();
-    
-    // On affiche uniquement si la recette est dans les favoris ET correspond à la recherche
-    if (favoris.includes(id) && title.includes(search)) {
+
+    if (title.includes(search)) {
       item.style.display = '';
     } else {
       item.style.display = 'none';
     }
   });
-
-  // Message si aucun favori trouvé
-  const visibleCount = Array.from(document.querySelectorAll('.recette-item')).filter(item => item.style.display !== 'none').length;
-  if (visibleCount === 0) {
-    if (!document.querySelector('.no-favorites')) {
-      const message = document.createElement('div');
-      message.className = 'no-favorites';
-      message.textContent = 'Aucune recette favorite trouvée pour cette recherche.';
-      document.querySelector('.contenu').appendChild(message);
-    }
-  } else {
-    const message = document.querySelector('.no-favorites');
-    if (message) message.remove();
-  }
 }
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
   updateHearts();
   setupHearts();
-  filterRecipes();
+
+  // Recherche en direct au clavier
+  document.getElementById('searchInput').addEventListener('input', () => {
+    filterRecipes();
+  });
 });
 </script>
+
 
   
 </body>
