@@ -78,5 +78,11 @@
   <p>Faisez chauffer le gaufrier, huile légèrement les plaques.<br>
   Versez une louche de pâte et faisez cuire 4 à 5 minutes jusqu’à ce qu’elles soient bien dorées.</p>
 </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
