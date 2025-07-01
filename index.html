@@ -36,6 +36,34 @@ body.violet {
   background-color: #f0e6ff;
   color: #4b0082;
 }
+
+    /* Styles pour les thèmes de la bannière */
+    body.red .footer {
+      background-color: #e57373;
+    }
+    body.orange .footer {
+      background-color: #ffb74d;
+    }
+    body.blue .footer {
+      background-color: #64b5f6;
+    }
+    body.purple .footer {
+      background-color: #ba68c8;
+    }
+
+    /* Styles pour les thèmes des boutons */
+    body.red .voir-btn, body.red .etape-btn {
+      background-color: #e57373;
+    }
+    body.orange .voir-btn, body.orange .etape-btn {
+      background-color: #ffb74d;
+    }
+    body.blue .voir-btn, body.blue .etape-btn {
+      background-color: #64b5f6;
+    }
+    body.purple .voir-btn, body.purple .etape-btn {
+      background-color: #ba68c8;
+    }
     
 .bottom-nav {
   position: fixed;
@@ -123,6 +151,7 @@ body.violet {
       border-radius: 6px;
       cursor: pointer;
       display: inline-block;
+      transition: background-color 0.3s ease;
     }
 
     .search-input {
@@ -244,8 +273,8 @@ body.violet {
     <li>1 c. à soupe de psyllium blond (indispensable)</li>
     <li>1 sachet de levure de boulanger sèche (ou 15 g de levure fraîche)</li>
     <li>1 c. à café de sucre</li>
-    <li>300 ml d’eau tiède</li>
-    <li>1 c. à soupe d’huile d’olive</li>
+    <li>300 ml d'eau tiède</li>
+    <li>1 c. à soupe d'huile d'olive</li>
         </ul>
         <a class="etape-btn" href="pain_fr.html">Voir les étapes</a>
       </div>
@@ -265,8 +294,8 @@ body.violet {
     <li>1 c. à soupe de psyllium blond</li>
     <li>1 sachet de levure de boulanger sèche</li>
     <li>1 c. à café de sucre</li>
-    <li>180 ml d’eau tiède</li>
-    <li>1 c. à soupe d’huile d’olive</li>
+    <li>180 ml d'eau tiède</li>
+    <li>1 c. à soupe d'huile d'olive</li>
         </ul>
         <a class="etape-btn" href="pizza_fr.html">Voir les étapes</a>
       </div>
@@ -302,7 +331,7 @@ body.violet {
     <li>50 g de fécule de maïs (Maïzena)</li>
     <li>2 œufs</li>
     <li>300 ml de lait (végétal ou classique)</li>
-    <li>1 c. à soupe d’huile neutre</li>
+    <li>1 c. à soupe d'huile neutre</li>
     <li>1 pincée de sel</li>
         </ul>
         <a class="etape-btn" href="crepes_fr.html">Voir les étapes</a>
@@ -359,7 +388,7 @@ body.violet {
     <li>120 g de farine de riz</li>
     <li>30 g de fécule de maïs</li>
     <li>1 c. à café de levure sans gluten</li>
-    <li>1 c. à soupe de sucre</li>
+    <li>1 c. à soupe de sucure</li>
     <li>2 œufs</li>
     <li>250 ml de lait (ou boisson végétale)</li>
     <li>40 g de beurre fondu ou huile végétale</li>
@@ -441,7 +470,7 @@ body.violet {
     <li>1 c. à soupe de sucre</li>
     <li>2 œufs</li>
     <li>200 ml de lait</li>
-    <li>1 c. à soupe d’huile</li>
+    <li>1 c. à soupe d'huile</li>
     <li>1 pincée de sel</li>
         </ul>
         <a class="etape-btn" href="pancakes_fr.html">Voir les étapes</a>
@@ -456,7 +485,7 @@ body.violet {
       <div id="tartepomme" class="recette-content">
         <ul>
           <li>120 g de farine de riz</li>
-          <li>40 g de poudre d’amande</li>
+          <li>40 g de poudre d'amande</li>
           <li>40 g de fécule de maïs</li>
           <li>80 g de beurre ou margarine</li>
           <li>1 œuf</li>
@@ -478,8 +507,8 @@ body.violet {
           <li>60 g de fécule de tapioca</li>
           <li>1 c. à café de psyllium blond</li>
           <li>1 pincée de sel</li>
-          <li>150 ml d’eau tiède</li>
-          <li>1 c. à soupe d’huile neutre</li>
+          <li>150 ml d'eau tiède</li>
+          <li>1 c. à soupe d'huile neutre</li>
         </ul>
         <a class="etape-btn" href="wraps_fr.html">Voir les étapes</a>
       </div>
@@ -497,7 +526,7 @@ body.violet {
           <li>1 œuf</li>
           <li>80 g de beurre mou</li>
           <li>1/2 c. à café de levure chimique sans gluten</li>
-          <li>1/2 c. à café d’extrait de vanille</li>
+          <li>1/2 c. à café d'extrait de vanille</li>
           <li>100 g de pépites de chocolat noir</li>
         </ul>
         <a class="etape-btn" href="cookies_fr.html">Voir les étapes</a>
@@ -565,30 +594,26 @@ document.querySelectorAll('.recette-item').forEach(item => {
   });
 });
 
-filterBtn.addEventListener('click', () => {
-  filterOn = !filterOn;
+if (filterBtn) {
+  filterBtn.addEventListener('click', () => {
+    filterOn = !filterOn;
 
-  if (filterOn) {
-    filterBtn.textContent = "Afficher tout";
-    document.querySelectorAll('.recette-item').forEach(item => {
-      const heart = item.querySelector('.heart');
-      if (!heart.classList.contains('fav')) {
-        item.style.display = 'none';
-      }
-    });
-  } else {
-    filterBtn.textContent = "Afficher les Favoris";
-    document.querySelectorAll('.recette-item').forEach(item => {
-      item.style.display = 'block';
-    });
-  }
-});
-
-  // Affiche/masque une recette
-  function afficheRecette(id) {
-    const content = document.getElementById(id);
-    content.classList.toggle("active");
-  }
+    if (filterOn) {
+      filterBtn.textContent = "Afficher tout";
+      document.querySelectorAll('.recette-item').forEach(item => {
+        const heart = item.querySelector('.heart');
+        if (!heart.classList.contains('fav')) {
+          item.style.display = 'none';
+        }
+      });
+    } else {
+      filterBtn.textContent = "Afficher les Favoris";
+      document.querySelectorAll('.recette-item').forEach(item => {
+        item.style.display = 'block';
+      });
+    }
+  });
+}
 
   // Gère les favoris dans le localStorage
   function toggleFavori(id, element) {
@@ -607,6 +632,13 @@ filterBtn.addEventListener('click', () => {
 
   // Applique l'état des favoris au chargement
   document.addEventListener("DOMContentLoaded", () => {
+    // 1. Charger et appliquer le thème sauvegardé
+    const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+
+    // 2. Gérer les favoris
     const favoris = JSON.parse(localStorage.getItem("favoris")) || [];
     document.querySelectorAll(".recette-item").forEach(item => {
       const id = item.dataset.id;
@@ -628,7 +660,10 @@ filterBtn.addEventListener('click', () => {
       recipe.style.display = title.includes(input) ? "" : "none";
     });
   }
-
+</script>
+  
+</body>
+</html>
 
   window.addEventListener('DOMContentLoaded', () => {
     const theme = localStorage.getItem('cookzenTheme') || 'red';
