@@ -610,9 +610,13 @@ document.addEventListener('DOMContentLoaded', () => {
     filterRecipes();
   });
 });
+
+      // 1. Charger et appliquer le thème sauvegardé
+    const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
 </script>
 
-
-  
 </body>
 </html>
