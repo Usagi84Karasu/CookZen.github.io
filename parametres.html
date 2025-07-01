@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CookZen</title>
+  <title>CookZen - Paramètres</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
@@ -23,27 +23,29 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       padding: 2.5rem;
       width: 380px;
+      margin-bottom: 80px; /* Espace pour la nav du bas */
     }
 
-body.red .bottom-nav {
-  background-color: #e57373; /* rouge */
-  border-top-color: #cc5c5c;
-}
+    /* Styles pour les thèmes de la barre de navigation */
+    body.red .bottom-nav {
+      background-color: #e57373; /* rouge */
+      border-top-color: #cc5c5c;
+    }
 
-body.orange .bottom-nav {
-  background-color: #ffb74d; /* orange */
-  border-top-color: #cc9a3c;
-}
+    body.orange .bottom-nav {
+      background-color: #ffb74d; /* orange */
+      border-top-color: #cc9a3c;
+    }
 
-body.blue .bottom-nav {
-  background-color: #64b5f6; /* bleu */
-  border-top-color: #4d8fe6;
-}
+    body.blue .bottom-nav {
+      background-color: #64b5f6; /* bleu */
+      border-top-color: #4d8fe6;
+    }
 
-body.purple .bottom-nav {
-  background-color: #ba68c8; /* violet */
-  border-top-color: #974db3;
-}
+    body.purple .bottom-nav {
+      background-color: #ba68c8; /* violet */
+      border-top-color: #974db3;
+    }
     
     .nav-btn {
       text-decoration: none;
@@ -51,7 +53,12 @@ body.purple .bottom-nav {
       border: none;
       font-size: 34px;
       cursor: pointer;
-      color: #8f8989;
+      color: #fff; /* Blanc pour contraster avec les couleurs */
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      transform: scale(1.1);
     }
 
     .nav-btn:focus {
@@ -70,6 +77,7 @@ body.purple .bottom-nav {
       justify-content: space-around;
       align-items: center;
       z-index: 20;
+      transition: all 0.3s ease;
     }
 
     h1 {
@@ -88,11 +96,20 @@ body.purple .bottom-nav {
       margin-bottom: 1.2rem;
       box-shadow: inset 2px 2px 6px #dcdcdc,
                   inset -2px -2px 6px #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1),
+                  inset 2px 2px 6px #dcdcdc,
+                  inset -2px -2px 6px #ffffff;
     }
 
     .option label:first-child {
       font-size: 1.1rem;
       color: #333;
+      cursor: pointer;
     }
 
     .switch {
@@ -138,11 +155,38 @@ body.purple .bottom-nav {
       transform: translateX(22px);
     }
 
-    /* Thèmes colorés */
-    .slider.theme-red   { background-color: #e57373; }
-    .slider.theme-orange{ background-color: #ffb74d; }
-    .slider.theme-blue  { background-color: #64b5f6; }
-    .slider.theme-purple{ background-color: #ba68c8; }
+    /* Thèmes colorés pour les sliders */
+    input:checked + .slider.theme-red {
+      background-color: #e57373;
+    }
+
+    input:checked + .slider.theme-orange {
+      background-color: #ffb74d;
+    }
+
+    input:checked + .slider.theme-blue {
+      background-color: #64b5f6;
+    }
+
+    input:checked + .slider.theme-purple {
+      background-color: #ba68c8;
+    }
+
+    /* Animation d'apparition */
+    .container {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -190,45 +234,48 @@ body.purple .bottom-nav {
 </div>
 
 <script>
+  // Fonction pour appliquer le thème
+  function applyTheme(theme) {
+    document.body.className = theme;
+    // Stocker le thème dans localStorage
+    if (theme) {
+      localStorage.setItem('cookzenTheme', theme);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     const inputs = document.querySelectorAll('input[name="theme"]');
-    const saved = localStorage.getItem('cookzenTheme');
-
-    if (saved) {
-      const match = document.querySelector(`input[value="${saved}"]`);
-      if (match) {
-        match.checked = true;
-        document.body.className = saved;
+    
+    // Charger le thème sauvegardé
+    const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      const matchingInput = document.querySelector(`input[value="${savedTheme}"]`);
+      if (matchingInput) {
+        matchingInput.checked = true;
+        applyTheme(savedTheme);
       }
     }
 
+    // Écouter les changements de thème
     inputs.forEach(input => {
       input.addEventListener('change', () => {
         if (input.checked) {
-          localStorage.setItem('cookzenTheme', input.value);
-          document.body.className = input.value;
+          applyTheme(input.value);
+        }
+      });
+    });
+
+    // Permettre de cliquer sur le label pour sélectionner
+    document.querySelectorAll('.option label:first-child').forEach(label => {
+      label.addEventListener('click', () => {
+        const input = document.querySelector(`#${label.getAttribute('for')}`);
+        if (input) {
+          input.checked = true;
+          applyTheme(input.value);
         }
       });
     });
   });
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('cookzenTheme');
-    if (savedTheme) {
-      document.body.className = savedTheme;
-      // Appliquer la classe aussi sur les éléments si besoin (footer, boutons...)
-      const footer = document.querySelector('.footer');
-      if (footer) footer.className = 'footer ' + savedTheme;
-
-      const voirBtns = document.querySelectorAll('.voir-btn');
-      voirBtns.forEach(btn => {
-        btn.className = 'voir-btn ' + savedTheme;
-      });
-    }
-  });
-
-  document.body.className = input.value;
-
 </script>
 
 </body>
