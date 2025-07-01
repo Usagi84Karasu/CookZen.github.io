@@ -153,6 +153,26 @@
     const selectedInput = document.querySelector(`input[value="${savedTheme}"]`);
     if (selectedInput) selectedInput.checked = true;
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Appliquer le thème stocké au chargement
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+
+    // Ajouter les écouteurs sur les boutons
+    const themeButtons = document.querySelectorAll(".theme-switch");
+
+    themeButtons.forEach((btn) => {
+      btn.addEventListener("change", function () {
+        if (btn.checked) {
+          document.body.className = btn.value;
+          localStorage.setItem("theme", btn.value);
+        }
+      });
+    });
+  });
 </script>
 
 </body>
