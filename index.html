@@ -682,20 +682,6 @@ if (filterBtn) {
     if (btnVoir)  btnVoir.style.backgroundColor = themeColors[theme].button;
   });
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('cookzenTheme');
-    if (savedTheme) {
-      document.body.className = savedTheme;
-      // Appliquer la classe aussi sur les éléments si besoin (footer, boutons...)
-      const footer = document.querySelector('.footer');
-      if (footer) footer.className = 'footer ' + savedTheme;
-
-      const voirBtns = document.querySelectorAll('.voir-btn');
-      voirBtns.forEach(btn => {
-        btn.className = 'voir-btn ' + savedTheme;
-      });
-    }
-  });
 </script>
   
 </body>
