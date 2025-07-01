@@ -87,5 +87,11 @@
   Ajoutez la sauce, garniture, fromage…<br>
   Enfournez à 220 °C pendant 12 à 15 min, jusqu’à ce que les bords soient dorés.</p>
   </div>
+    <script>
+        const savedTheme = localStorage.getItem('cookzenTheme');
+    if (savedTheme) {
+      document.body.className = savedTheme;
+    }
+  </script>
 </body>
 </html>
