@@ -90,6 +90,7 @@
       transform: translateX(22px);
     }
 
+    /* Thèmes colorés */
     .slider.theme-red   { background-color: #e57373; }
     .slider.theme-orange{ background-color: #ffb74d; }
     .slider.theme-blue  { background-color: #64b5f6; }
@@ -102,60 +103,56 @@
   <h1>Choisir un thème</h1>
 
   <div class="option">
-    <label for="red">Rouge</label>
+    <label for="theme-red">Rouge</label>
     <div class="switch">
-      <input type="checkbox" id="red" onchange="selectTheme('red')">
+      <input type="radio" name="theme" id="theme-red" value="red">
       <span class="slider theme-red"></span>
     </div>
   </div>
 
   <div class="option">
-    <label for="orange">Orange</label>
+    <label for="theme-orange">Orange</label>
     <div class="switch">
-      <input type="checkbox" id="orange" onchange="selectTheme('orange')">
+      <input type="radio" name="theme" id="theme-orange" value="orange">
       <span class="slider theme-orange"></span>
     </div>
   </div>
 
   <div class="option">
-    <label for="blue">Bleu</label>
+    <label for="theme-blue">Bleu</label>
     <div class="switch">
-      <input type="checkbox" id="blue" onchange="selectTheme('blue')">
+      <input type="radio" name="theme" id="theme-blue" value="blue">
       <span class="slider theme-blue"></span>
     </div>
   </div>
 
   <div class="option">
-    <label for="purple">Violet</label>
+    <label for="theme-purple">Violet</label>
     <div class="switch">
-      <input type="checkbox" id="purple" onchange="selectTheme('purple')">
+      <input type="radio" name="theme" id="theme-purple" value="purple">
       <span class="slider theme-purple"></span>
     </div>
   </div>
 </div>
 
 <script>
-  const allThemes = ['red', 'orange', 'blue', 'purple'];
+  const themeInputs = document.querySelectorAll('input[name="theme"]');
 
-  function selectTheme(selected) {
-    // Uncheck all
-    allThemes.forEach(t => {
-      document.getElementById(t).checked = false;
+  // Quand on sélectionne un thème
+  themeInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        localStorage.setItem('cookzenTheme', input.value);
+      }
     });
-    // Check only the selected
-    document.getElementById(selected).checked = true;
+  });
 
-    // Save to localStorage
-    localStorage.setItem('cookzenTheme', selected);
-  }
-
-  // On load, apply checked state
-  window.onload = () => {
-    const saved = localStorage.getItem('cookzenTheme') || 'red';
-    if (document.getElementById(saved)) {
-      document.getElementById(saved).checked = true;
-    }
-  }
+  // Appliquer le thème enregistré au chargement
+  window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('cookzenTheme') || 'red';
+    const selectedInput = document.querySelector(`input[value="${savedTheme}"]`);
+    if (selectedInput) selectedInput.checked = true;
+  });
 </script>
 
 </body>
