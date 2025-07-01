@@ -633,6 +633,41 @@
       document.getElementById('noFavoritesMessage').style.display = 'block';
     }
   });
+
+  function filterRecipes() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const recipes = document.querySelectorAll('.recette-item');
+
+  recipes.forEach(recipe => {
+    const isFav = recipe.querySelector('.heart').classList.contains('fav');
+    const title = recipe.querySelector('.recette-title').textContent.toLowerCase();
+
+    // Affiche uniquement si c'est un favori ET que le titre correspond à la recherche
+    if (isFav && title.includes(searchTerm)) {
+      recipe.style.display = '';
+    } else {
+      recipe.style.display = 'none';
+    }
+  });
+
+  // Optionnel : afficher un message s'il n'y a aucun résultat
+  const visibleRecipes = [...recipes].filter(r => r.style.display !== 'none');
+  if (visibleRecipes.length === 0) {
+    // afficher un message d'aucun résultat (tu peux créer un div pour ça)
+    if (!document.getElementById('noResultsMsg')) {
+      const noResults = document.createElement('div');
+      noResults.id = 'noResultsMsg';
+      noResults.textContent = "Aucune recette favorite ne correspond à votre recherche.";
+      noResults.style.textAlign = 'center';
+      noResults.style.marginTop = '20px';
+      document.getElementById('recipeList').appendChild(noResults);
+    }
+  } else {
+    const noResults = document.getElementById('noResultsMsg');
+    if (noResults) noResults.remove();
+  }
+}
+
 </script>
 
 </body>
